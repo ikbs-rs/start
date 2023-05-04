@@ -8,7 +8,7 @@ const LandingFooter = () => {
     <div className="landing-footer" >
       <div className="grid">
         <div className="col-12 lg:col-3">
-          <img src={`${env.PUBLIC_URL}/assets/layout/images/logo-beli2.png`} alt="roma" />
+          <img src={`assets/layout/images/logo-beli2.png`} alt="roma" />
         </div>
         <div className="col-12 lg:col-3">
           <h4>ABOUT US</h4>

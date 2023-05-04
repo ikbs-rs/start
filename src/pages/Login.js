@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
 import { Checkbox } from 'primereact/checkbox';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import env from "../configs/env"
 
 export const Login = () => {
     const [checked, setChecked] = useState(false);
@@ -20,26 +21,26 @@ export const Login = () => {
           password: passwordInput
         };
 
-        // axios
-        // .post("http://localhost:8302/adm/services/sign/in", requestData)
-        // .then((response) => {
-        //   isLoggedIn = response.status === 200; // Ako je status 200, isLoggedIn će biti true
+        axios
+         .post(`${env.JWT_BACK_URL}/adm/services/sign/in`, requestData)
+         .then((response) => {
+           isLoggedIn = response.status === 200; // Ako je status 200, isLoggedIn će biti true
            if (isLoggedIn) {
              //TODO idi na pocetnu stranicu
-             console.log("if")
-             localStorage.setItem('jwtToken', 'OK');
+             localStorage.setItem('token', response.data.token);
+             localStorage.setItem('refreshToken', response.data.refreshToken);
              navigate('/');
            } else {
              //TODO vrati se na login
              console.log("else")
              navigate('/login');
            }
-        // })
-        // .catch((error) => {
-        //   console.error(error);
-        //   isLoggedIn = false; // Ako se dogodila pogreška, isLoggedIn će biti false
-        //   //TODO vrati se na login
-        // });        
+         })
+         .catch((error) => {
+           console.error(error);
+           isLoggedIn = false; // Ako se dogodila pogreška, isLoggedIn će biti false
+           //TODO vrati se na login
+         });        
     }    
 
     return (

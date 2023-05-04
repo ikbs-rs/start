@@ -7,7 +7,7 @@ const HomeHeader = ({ scrollToDiv }) => {
   //const history = useHistory();
 
   const handleLogout = () => {
-    localStorage.removeItem("jwtToken");
+    localStorage.removeItem("token");
     window.location.reload();
     //history.push("/");
   }
@@ -17,11 +17,11 @@ const HomeHeader = ({ scrollToDiv }) => {
       <div>
       <div className="landing-topbar" style={{ backgroundColor: "#173042" }}>
         <span>
-        <img src={`${env.PUBLIC_URL}/assets/layout/images/logo-beli2.png`} alt="Ticket line" style={{ width: "124.7px", height: "37px" }}/>
+        <img src={`assets/layout/images/logo-beli2.png`} alt="Ticket line" style={{ width: "124.7px", height: "37px" }}/>
         </span>
 
         <a href="#" id="landing-menu-button">
-          <img src={`${env.PUBLIC_URL}/assets/layout/images/landing/icon-ellipsis-v.svg`} alt="Ticketline" />
+          <img src={`assets/layout/images/landing/icon-ellipsis-v.svg`} alt="Ticketline" />
         </a>
 
         <ul id="landing-menu">
@@ -48,7 +48,7 @@ const HomeHeader = ({ scrollToDiv }) => {
         <h1>Ticketline system</h1>
         <p>
           Modern and elegant responsive application with a premium look
-          for Pro components.
+          for Pro company.
         </p>
         <Button
           label="Learn More"

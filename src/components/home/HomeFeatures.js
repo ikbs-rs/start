@@ -8,7 +8,7 @@ function HomeFeatures() {
   const navigate = useNavigate();
 
   const handleBoxClick = (par) => {
-    const moduleUrl = `http://localhost:${par}/`;
+    const moduleUrl = par;
     const currentUrl = window.location.href;
 
     const xhr = new XMLHttpRequest();
@@ -30,8 +30,8 @@ function HomeFeatures() {
       </div>
       <div className="grid">
         <div className="col-12 lg:col-4" >
-          <div className="feature-box" onClick={() => handleBoxClick("8352")}>
-            <img src={`${env.PUBLIC_URL}/assets/layout/images/landing/icon-gorgeous@2x.png`} alt="roma" style={{ cursor: 'pointer' }}/>
+          <div className="feature-box" onClick={() => handleBoxClick(`${env.ADM_URL}`)}>
+            <img src={`assets/layout/images/landing/icon-gorgeous@2x.png`} alt="roma" style={{ cursor: 'pointer' }}/>
             <div style={{ cursor: 'pointer' }}>
               <h3>System administration</h3>
               <p>Select this option to access System Administration.</p>
@@ -40,7 +40,7 @@ function HomeFeatures() {
         </div>    
         <div className="col-12 lg:col-4">
           <div className="feature-box" onClick={() => handleBoxClick("app")}>
-            <img src={`${env.PUBLIC_URL}/assets/layout/images/landing/icon-design@2x.png`} alt="roma" style={{ cursor: 'pointer' }}/>
+            <img src={`assets/layout/images/landing/icon-design@2x.png`} alt="roma" style={{ cursor: 'pointer' }}/>
             <div style={{ cursor: 'pointer' }}>
               <h3>Community code books</h3>
               <p>Here you can fill in the main elements of the system.</p>
@@ -49,7 +49,7 @@ function HomeFeatures() {
         </div>              
         <div className="col-12 lg:col-4">
           <div className="feature-box" onClick={() => handleBoxClick("app")}>
-            <img src= {`${env.PUBLIC_URL}/assets/layout/images/landing/icon-responsive@2x.png`} alt="roma" style={{ cursor: 'pointer' }}/>
+            <img src= {`assets/layout/images/landing/icon-responsive@2x.png`} alt="roma" style={{ cursor: 'pointer' }}/>
             <div style={{ cursor: 'pointer' }}>
               <h3>Ticketline system</h3>
               <p>Here you can choose the administration of the Ticketline system.</p>
@@ -58,7 +58,7 @@ function HomeFeatures() {
         </div>
         <div className="col-12 lg:col-4">
           <div className="feature-box">
-            <img src={`${env.PUBLIC_URL}/assets/layout/images/landing/icon-document@2x.png`} alt="roma" style={{ cursor: 'pointer' }}/>
+            <img src={`assets/layout/images/landing/icon-document@2x.png`} alt="roma" style={{ cursor: 'pointer' }}/>
             <div style={{ cursor: 'pointer' }}> 
               <h3>Reporting</h3>
               <p>View reports from the system.</p>
@@ -67,7 +67,7 @@ function HomeFeatures() {
         </div>
         <div className="col-12 lg:col-4">
           <div className="feature-box">
-            <img src={`${env.PUBLIC_URL}/assets/layout/images/landing/icon-you@2x.png`} alt="roma" style={{ cursor: 'pointer' }}/>
+            <img src={`assets/layout/images/landing/icon-you@2x.png`} alt="roma" style={{ cursor: 'pointer' }}/>
             <div style={{ cursor: 'pointer' }}>
               <h3>Customer support</h3>
               <p>Handling requests and incidents.</p>
