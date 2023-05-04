@@ -3,7 +3,7 @@ import React from "react";
 const HomeNews = () => {
   return (
     <div id="news" className="landing-news">
-      <h3>PrimeReact Premium Template</h3>
+      <h3>Ticeketline</h3>
       <p>
         Take advantage of media's most prominent business trend, and empowers
         your internal advertising teams.{" "}

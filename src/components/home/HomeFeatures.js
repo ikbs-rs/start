@@ -26,60 +26,51 @@ function HomeFeatures() {
   return (
     <div id="features" className="landing-features">
       <div className="features-topic-shadow">
-        <div className="features-topic">FEATURES</div>
+        <div className="features-topic">MODULES</div>
       </div>
       <div className="grid">
-        <div className="col-12 lg:col-4">
+        <div className="col-12 lg:col-4" >
           <div className="feature-box" onClick={() => handleBoxClick("8352")}>
-            <img src={`${env.PUBLIC_URL}/assets/layout/images/landing/icon-design@2x.png`} alt="roma" />
-            <div>
-              <h3>Administracija sistema</h3>
-              <p>Izaberite ovu opciju da biste pristupili Administraciji sistema.</p>
+            <img src={`${env.PUBLIC_URL}/assets/layout/images/landing/icon-gorgeous@2x.png`} alt="roma" style={{ cursor: 'pointer' }}/>
+            <div style={{ cursor: 'pointer' }}>
+              <h3>System administration</h3>
+              <p>Select this option to access System Administration.</p>
             </div>
           </div>
         </div>    
         <div className="col-12 lg:col-4">
           <div className="feature-box" onClick={() => handleBoxClick("app")}>
-            <img src={`${env.PUBLIC_URL}/assets/layout/images/landing/icon-design@2x.png`} alt="roma" />
-            <div>
-              <h3>Zajedički šifarnici</h3>
-              <p>Ovde možete popuniti glavne elemente sistema.</p>
+            <img src={`${env.PUBLIC_URL}/assets/layout/images/landing/icon-design@2x.png`} alt="roma" style={{ cursor: 'pointer' }}/>
+            <div style={{ cursor: 'pointer' }}>
+              <h3>Community code books</h3>
+              <p>Here you can fill in the main elements of the system.</p>
             </div>
           </div>
         </div>              
         <div className="col-12 lg:col-4">
           <div className="feature-box" onClick={() => handleBoxClick("app")}>
-            <img src= {`${env.PUBLIC_URL}/assets/layout/images/landing/icon-responsive@2x.png`} alt="roma" />
-            <div>
-              <h3>Ticketline sistem</h3>
-              <p>Ovde možete izabrati administraciju Ticketline sistema.</p>
+            <img src= {`${env.PUBLIC_URL}/assets/layout/images/landing/icon-responsive@2x.png`} alt="roma" style={{ cursor: 'pointer' }}/>
+            <div style={{ cursor: 'pointer' }}>
+              <h3>Ticketline system</h3>
+              <p>Here you can choose the administration of the Ticketline system.</p>
             </div>
           </div>
         </div>
         <div className="col-12 lg:col-4">
           <div className="feature-box">
-            <img src={`${env.PUBLIC_URL}/assets/layout/images/landing/icon-code@2x.png`} alt="roma" />
-            <div>
-              <h3>Clean Code</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <img src={`${env.PUBLIC_URL}/assets/layout/images/landing/icon-document@2x.png`} alt="roma" style={{ cursor: 'pointer' }}/>
+            <div style={{ cursor: 'pointer' }}> 
+              <h3>Reporting</h3>
+              <p>View reports from the system.</p>
             </div>
           </div>
         </div>
         <div className="col-12 lg:col-4">
           <div className="feature-box">
-            <img src={`${env.PUBLIC_URL}/assets/layout/images/landing/icon-gorgeous@2x.png`} alt="roma" />
-            <div>
-              <h3>Gorgeous Pages</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            </div>
-          </div>
-        </div>
-        <div className="col-12 lg:col-4">
-          <div className="feature-box">
-            <img src={`${env.PUBLIC_URL}/assets/layout/images/landing/icon-you@2x.png`} alt="roma" />
-            <div>
-              <h3>Crafted for You</h3>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <img src={`${env.PUBLIC_URL}/assets/layout/images/landing/icon-you@2x.png`} alt="roma" style={{ cursor: 'pointer' }}/>
+            <div style={{ cursor: 'pointer' }}>
+              <h3>Customer support</h3>
+              <p>Handling requests and incidents.</p>
             </div>
           </div>
         </div>

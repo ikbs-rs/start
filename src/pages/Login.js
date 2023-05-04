@@ -48,8 +48,8 @@ export const Login = () => {
                 <div className="login-panel-content">
                     <div className="grid">
                         <div className="col-12 sm:col-6 md:col-6 logo-container">
-                            <img src="assets/layout/images/logo-roma.svg" alt="roma" />
-                            <span className="guest-sign-in">Welcome, please use the form to sign-in Roma network</span>
+                            <img src="assets/layout/images/logo-tl.png" alt="Ticketline" style={{ width: "155.88px", height: "46.25px" }}/>
+                            <span className="guest-sign-in">Welcome, please use the form to sign-in Ticketline network</span>
                         </div>
                         <div className="col-12 username-container">
                             <label>Username</label>
