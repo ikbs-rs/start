@@ -8,13 +8,14 @@ import { Access } from './pages/Access';
 import axios from 'axios';
 import env from "./configs/env"
 
+
 const AppWrapper = (props) => {
+  console.log("******************START********************")
     let location = useLocation();
     const navigate = useNavigate();
     let [isLoggedIn, setIsLoggedIn] = useState(false);
 
     useEffect(() => {
-      const refererUrl = `${env.BASE_URL}`;
       const token = localStorage.getItem('token');
       // proveri da li postoji token i da li je validan
       if (token && token.length > 0) {
@@ -22,9 +23,6 @@ const AppWrapper = (props) => {
         axios
          .post(`${env.JWT_BACK_URL}/adm/services/checkJwt`,
          {
-          params: {
-            referer: refererUrl,
-          },
         },
         {
           headers: { Authorization: `Bearer ${token}` },

@@ -32,7 +32,6 @@ export const Login = () => {
              navigate('/');
            } else {
              //TODO vrati se na login
-             console.log("else")
              navigate('/login');
            }
          })

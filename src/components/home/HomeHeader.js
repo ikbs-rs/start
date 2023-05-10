@@ -24,8 +24,8 @@ const HomeHeader = ({ scrollToDiv }) => {
           <img src={`assets/layout/images/landing/icon-ellipsis-v.svg`} alt="Ticketline" />
         </a>
 
-        <ul id="landing-menu">
-          <li>
+        <ul className="layout-profile-name" id="landing-menu" >
+          <li  className="layout-profile-name">
             <a onClick={() => scrollToDiv("home")}>Home</a>
           </li>
           <li>
