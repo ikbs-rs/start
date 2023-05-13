@@ -1,0 +1,50 @@
+.nc-carousel-wrapper {
+    position: relative;
+    width: 100%;
+    overflow: hidden
+}
+
+.nc-carousel-wrapper .nc-carousel-inner-wrapper {
+    width: 90%;
+    margin: auto;
+    overflow: hidden
+}
+
+.nc-carousel-wrapper ul.nc-carousel {
+    position: relative;
+    width: 100%;
+    min-width: 100%;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    list-style-type: none
+}
+
+.nc-carousel-wrapper ul.nc-carousel li.nc-carousel-item {
+    display: inline-block;
+    float: left;
+    height: auto;
+    width: 100px;
+    list-style: none
+}
+
+.nc-carousel-wrapper ul.nc-carousel li.nc-carousel-item .item-inner-wrapper {
+    position: relative;
+    height: 100%;
+    width: 90%;
+    margin: auto
+}
+
+.nc-carousel-wrapper .nc-carousel-navigation {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%)
+}
+
+.nc-carousel-wrapper .nc-carousel-navigation .nc-carousel-item-prev {
+    left: 0
+}
+
+.nc-carousel-wrapper .nc-carousel-navigation  {
+    right: 0
+}

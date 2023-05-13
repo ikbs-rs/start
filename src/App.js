@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Header from './components/home/HomeHeader';
 import Modules from './components/home/HomeFeatures';
 import News from './components/home/HomeNews';
+import News1 from './components/home/HomeNewsletterSection';
 import Pricing from './components/home/HomePricing';
 import Footer from './components/home/HomeFooter';
 
@@ -26,6 +27,7 @@ const App = () => {
             <Header scrollToDiv={scrollToDiv} />
             <Modules />
             <News />
+            <News1 />              
             <Pricing />
             <Footer />
           </div>
