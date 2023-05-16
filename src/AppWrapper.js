@@ -10,7 +10,6 @@ import env from "./configs/env"
 
 
 const AppWrapper = (props) => {
-  console.log("******************START********************")
     let location = useLocation();
     const navigate = useNavigate();
     let [isLoggedIn, setIsLoggedIn] = useState(false);

@@ -6,6 +6,8 @@ import News from './components/home/HomeNews';
 import News1 from './components/home/HomeNewsletterSection';
 import Pricing from './components/home/HomePricing';
 import Footer from './components/home/HomeFooter';
+import { useDispatch } from 'react-redux';
+import { setLanguage } from './store/actions';
 
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
@@ -13,6 +15,16 @@ import 'primeflex/primeflex.css';
 import './App.scss';
 
 const App = () => {
+    
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const selectedLanguage = urlParams.get('sl');
+    if (selectedLanguage) {
+      dispatch(setLanguage(selectedLanguage)); // Postavi jezik iz URL-a u globalni store
+    }
+  }, [dispatch]);
     
     const scrollToDiv = (id) => {
         const element = document.getElementById(id);

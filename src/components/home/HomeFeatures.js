@@ -3,11 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import env from "../../configs/env"
 import queryString from "query-string"
+import { useSelector } from 'react-redux';
 
 function HomeFeatures() {
 
   const navigate = useNavigate();
   const queryParams = queryString.parse(window.location)
+  const selectedLanguage = useSelector((state) => state.selectedLanguage);
 
   const handleBoxClick = (par) => {
 
@@ -35,7 +37,7 @@ function HomeFeatures() {
       </div>
       <div className="grid">
         <div className="col-12 lg:col-4" >
-          <a href={`${env.ADM_URL}`}>
+          <a href={`${env.ADM_URL}?sl=${selectedLanguage}`}>
             <div className="feature-box">
               <img src={`assets/layout/images/landing/icon-gorgeous@2x.png`} alt="roma" style={{ cursor: 'pointer' }} />
               <div style={{ cursor: 'pointer' }}>
@@ -46,7 +48,7 @@ function HomeFeatures() {
           </a>
         </div>
         <div className="col-12 lg:col-4">
-          <a href={`${env.CMN_URL}`}>
+          <a href={`${env.CMN_URL}?sl=${selectedLanguage}`}>
             <div className="feature-box">
               <img src={`assets/layout/images/landing/icon-design@2x.png`} alt="roma" style={{ cursor: 'pointer' }} />
               <div style={{ cursor: 'pointer' }}>
@@ -57,7 +59,7 @@ function HomeFeatures() {
           </a>
         </div>
         <div className="col-12 lg:col-4">
-          <a href={`${env.TIC_URL}`}>
+          <a href={`${env.TIC_URL}?sl=${selectedLanguage}`}>
             <div className="feature-box">
               <img src={`assets/layout/images/landing/icon-responsive@2x.png`} alt="roma" style={{ cursor: 'pointer' }} />
               <div style={{ cursor: 'pointer' }}>
@@ -68,7 +70,7 @@ function HomeFeatures() {
           </a>
         </div>
         <div className="col-12 lg:col-4">
-          <a href={`${env.ADM_URL}`}>
+          <a href={`${env.ADM_URL}?sl=${selectedLanguage}`}>
             <div className="feature-box">
               <img src={`assets/layout/images/landing/icon-document@2x.png`} alt="roma" style={{ cursor: 'pointer' }} />
               <div style={{ cursor: 'pointer' }}>

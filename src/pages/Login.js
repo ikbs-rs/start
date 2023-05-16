@@ -12,8 +12,15 @@ export const Login = () => {
     const [checked, setChecked] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
-    const handleButtoClick = (parameter) => {
+    const search = window.location.search;
+    const params = new URLSearchParams(search);
+    let sl = params.get('sl');
+    
+    const onInputChange = (e, name) => {
+        sl= e.target.value
+        dispatch(setLanguage(sl));
+    }
+    const handleButtonClick = (parameter) => {
         // Ovde nedostaje kod za logovanje
         let isLoggedIn = true;
         const usernameInput = document.getElementById("input").value; // Koristimo document.getElementById da bismo dohvatili vrijednost polja Username
@@ -24,6 +31,8 @@ export const Login = () => {
           password: passwordInput
         };
 
+        //dispatch(setLanguage(sl)); // Postavite željeni jezik umesto 'en'
+
         axios
          .post(`${env.JWT_BACK_URL}/adm/services/sign/in`, requestData)
          .then((response) => {
@@ -32,7 +41,11 @@ export const Login = () => {
              //TODO idi na pocetnu stranicu
              localStorage.setItem('token', response.data.token);
              localStorage.setItem('refreshToken', response.data.refreshToken);
-             navigate('/');
+             const newUrl = `${window.location.pathname}?sl=${sl}`;
+             window.location.replace(newUrl);
+             //dispatch(setLanguage(sl));
+
+            // navigate('/');
            } else {
              //TODO vrati se na login
              navigate('/login');
@@ -69,7 +82,7 @@ export const Login = () => {
                         <div className="col-12 language-container">
                             <label>Language</label>
                             <div className="login-input">
-                                <select onChange={(e) => dispatch(setLanguage(e.target.value))}>
+                                <select id="language-input" onChange={(e) => onInputChange(e, 'language-input')}>
                                     <option value="en">English</option>
                                     <option value="sr-Cyrl">Srpski (ćirilica)</option>
                                     <option value="sr-Latn">Srpski (latinica)</option>
@@ -91,7 +104,7 @@ export const Login = () => {
                         </div>
 
                         <div className="col-12 sm:col-6 md:col-6">
-                            <Button label="Sign In" icon="pi pi-check" onClick={() => handleButtoClick('app')}/>
+                            <Button label="Sign In" icon="pi pi-check" onClick={() => handleButtonClick('app')}/>
                         </div>
                     </div>
                 </div>
