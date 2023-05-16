@@ -3,13 +3,17 @@ import ReactDOM from 'react-dom/client';
 import { HashRouter } from 'react-router-dom';
 import AppWrapper from './AppWrapper';
 import reportWebVitals from './reportWebVitals';
+import { Provider } from 'react-redux';
+import { store } from './store/store';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
+            <Provider store={store}>
         <HashRouter>
             <AppWrapper></AppWrapper>
         </HashRouter>
+        </Provider>
     </React.StrictMode>
 );
 
