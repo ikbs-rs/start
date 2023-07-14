@@ -1,0 +1,20 @@
+{
+    "home": "Home",
+    "modules": "Modules",
+    "news": "News",
+    "pricing": "Pricing",
+    "logout": "Logout",
+    "slogan": "Modern and elegant responsive application with a premium look for Pro company.",
+    "learnMore": "Learn More",
+    "systemAdmin": "System Administration",
+    "systemAdminDescription": "Select this option to access System Administration.",
+    "commonLibrary": "Common library",
+    "commonLibraryDescription": "Here you can fill in the main elements of the system.",
+    "ticketlineSystem": "Ticketline system",
+    "ticketlineSystemDescription": "Here you can choose the administration of the Ticketline system.",
+    "reporting": "Reporting",
+    "reportingDescription": "View reports from the system.",
+    "customerSupport": "Customer support",
+    "customerSupportDescription": "Handling requests and incidents."
+  }
+  

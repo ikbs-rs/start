@@ -5,11 +5,32 @@ import { Login } from './pages/Login';
 import { Error } from './pages/Error';
 import { NotFound } from './pages/NotFound';
 import { Access } from './pages/Access';
+import { useTokenValidation } from './security/interceptors';
 import axios from 'axios';
 import env from "./configs/env"
 
 
 const AppWrapper = (props) => {
+  let location = useLocation();
+  const navigate = useNavigate();
+  const isLoggedIn = useTokenValidation();
+
+  // izvrsavanje efekata  komponenti kada se komponenta
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location]);
+  // kada nema drugog argumenta to znaci da se funkcija izvrsava samo `onload`
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      //TODO idi na pocetnu stranicu
+      navigate('/');
+    } else {
+      //TODO vrati se na login
+      navigate('/login');
+    }
+  }, [isLoggedIn, navigate]);
+  /*
     let location = useLocation();
     const navigate = useNavigate();
     let [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -18,7 +39,7 @@ const AppWrapper = (props) => {
       const token = localStorage.getItem('token');
       // proveri da li postoji token i da li je validan
       if (token && token.length > 0) {
-        // ovde mozete dodati kod za proveru da li je token validan
+        // Provera da li je token validan
         axios
          .post(`${env.JWT_BACK_URL}/adm/services/checkJwt`,
          {
@@ -33,7 +54,7 @@ const AppWrapper = (props) => {
            if (isLoggedIn) {
              //TODO idi na pocetnu stranicu
              setIsLoggedIn(true);
-            // navigate('/');
+            navigate('/');
            } else {
              //TODO vrati se na login
              navigate('/login');
@@ -50,7 +71,8 @@ const AppWrapper = (props) => {
       }
       window.scrollTo(0, 0);
     }, [location]);
-  
+  */
+ 
     return (
       <Routes>
         <Route path="/login" element={<Login />} />
@@ -64,6 +86,7 @@ const AppWrapper = (props) => {
         )}
       </Routes>
     );
+   
   };
 
 export default AppWrapper;

@@ -8,11 +8,15 @@ import { store } from './store/store';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <React.StrictMode>
-            <Provider store={store}>
-        <HashRouter>
-            <AppWrapper></AppWrapper>
-        </HashRouter>
+/*React.StrictMode - proveru pravila u toku razvoja*/
+
+    <React.StrictMode> 
+        { /*Uprvljanje stanjem u aplikacijuom - `store` prostor za globalne promenljive*/}
+        <Provider store={store}>
+            {/* Komponenta za implementaciju rutiranja (navigacije), mogu se koristiti i druge komponente, okviri(Next.js) ili sopstvena immplementacija */}
+            <HashRouter>
+                <AppWrapper></AppWrapper>
+            </HashRouter>
         </Provider>
     </React.StrictMode>
 );

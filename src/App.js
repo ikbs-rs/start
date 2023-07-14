@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useState  } from 'react';
 
 import Header from './components/home/HomeHeader';
 import Modules from './components/home/HomeFeatures';
@@ -8,23 +8,24 @@ import Pricing from './components/home/HomePricing';
 import Footer from './components/home/HomeFooter';
 import { useDispatch } from 'react-redux';
 import { setLanguage } from './store/actions';
+import { usePermission } from './security/interceptors';
 
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import 'primeflex/primeflex.css';
 import './App.scss';
 
-const App = () => {
+const App =  () => {
     
   const dispatch = useDispatch();
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
-    const selectedLanguage = urlParams.get('sl');
+    const selectedLanguage = localStorage.getItem('sl') //urlParams.get('sl');
     if (selectedLanguage) {
       dispatch(setLanguage(selectedLanguage)); // Postavi jezik iz URL-a u globalni store
     }
-  }, [dispatch]);
+  }, []);
     
     const scrollToDiv = (id) => {
         const element = document.getElementById(id);
@@ -37,7 +38,7 @@ const App = () => {
         <div className="landing-body">
           <div className="landing-wrapper">
             <Header scrollToDiv={scrollToDiv} />
-            <Modules />
+            {usePermission('Modules', 'par1', 'par2') && <Modules />}
             <News />
             <News1 />              
             <Pricing />

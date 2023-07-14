@@ -1,15 +1,26 @@
-import React from "react";
+import React, { useState, useEffect }  from "react";
 import { Button } from "primereact/button";
+import { translations } from "../../configs/translations";
 //import { useHistory } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 import env from "../../configs/env"
+import { useSelector } from 'react-redux';
 
 const HomeHeader = ({ scrollToDiv }) => {
+  const selLen = localStorage.getItem('sl')||'en' //useSelector(state => state.selectedLanguage)
+  const [currentLanguage, setCurrentLanguage] = useState(selLen);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setCurrentLanguage(selLen)
+  }, [selLen]);
   //const history = useHistory();
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    window.location.reload();
-    //history.push("/");
+    sessionStorage.removeItem("isLoggedIn");
+    //window.location.reload();
+    navigate('/login');
   }
 
   return (
@@ -26,19 +37,19 @@ const HomeHeader = ({ scrollToDiv }) => {
 
         <ul className="layout-profile-name" id="landing-menu" >
           <li  className="layout-profile-name">
-            <a onClick={() => scrollToDiv("home")}>Home</a>
+            <a onClick={() => scrollToDiv("home")}>{translations[selLen].home}</a>
           </li>
           <li>
-            <a onClick={() => scrollToDiv("features")}>Modules</a>
+            <a onClick={() => scrollToDiv("features")}>{translations[selLen].modules}</a>
           </li>
           <li>
-            <a onClick={() => scrollToDiv("news")}>News</a>
+            <a onClick={() => scrollToDiv("news")}>{translations[selLen].news}</a>
           </li>
           <li>
-            <a onClick={() => scrollToDiv("pricing")}>Pricing</a>
+            <a onClick={() => scrollToDiv("pricing")}>{translations[selLen].pricing}</a>
           </li>
           <li>
-            <a onClick={() => handleLogout()}>Logout</a>
+            <a onClick={() => handleLogout()}>{translations[selLen].logout}</a>
           </li>          
         </ul>
       </div>
@@ -46,12 +57,9 @@ const HomeHeader = ({ scrollToDiv }) => {
 
       <div className="landing-header-content">
         <h1>Ticketline system</h1>
-        <p>
-          Modern and elegant responsive application with a premium look
-          for Pro company.
-        </p>
+        <p>{translations[selLen].slogan}</p>
         <Button
-          label="Learn More"
+          label={translations[selLen].learnMore}
           className="p-button-text-only p-widget p-state-default p-corner-all"
         />
       </div>

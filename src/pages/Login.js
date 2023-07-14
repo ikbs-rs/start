@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState} from 'react';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
 import { Checkbox } from 'primereact/checkbox';
@@ -9,17 +9,20 @@ import { useDispatch } from 'react-redux';
 import { setLanguage } from '../store/actions';
 
 export const Login = () => {
+
     const [checked, setChecked] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const search = window.location.search;
-    const params = new URLSearchParams(search);
-    let sl = params.get('sl');
-    
+    //const search = window.location.search;    
+    //const params = new URLSearchParams(search);
+    let sl = localStorage.getItem('sl')||'en' //params.get('sl');   
+
     const onInputChange = (e, name) => {
         sl= e.target.value
+        //setCurrentLanguage(sl)
         dispatch(setLanguage(sl));
     }
+
     const handleButtonClick = (parameter) => {
         // Ovde nedostaje kod za logovanje
         let isLoggedIn = true;
@@ -41,14 +44,17 @@ export const Login = () => {
              //TODO idi na pocetnu stranicu
              localStorage.setItem('token', response.data.token);
              localStorage.setItem('refreshToken', response.data.refreshToken);
-             const newUrl = `${window.location.pathname}?sl=${sl}`;
-             window.location.replace(newUrl);
+             sessionStorage.setItem('isLoggedIn', 'true');
+             localStorage.setItem('sl', sl||"en");
+             navigate(`/login}`);
+             //const newUrl = `${window.location.pathname}?sl=${sl||"en"}`;
+             //window.location.replace(newUrl);
              //dispatch(setLanguage(sl));
 
-            // navigate('/');
+            navigate('/');
            } else {
              //TODO vrati se na login
-             navigate('/login');
+             navigate(`/login}`);
            }
          })
          .catch((error) => {
@@ -82,10 +88,10 @@ export const Login = () => {
                         <div className="col-12 language-container">
                             <label>Language</label>
                             <div className="login-input">
-                                <select id="language-input" onChange={(e) => onInputChange(e, 'language-input')}>
+                                <select id="language-input" onChange={(e) => onInputChange(e, 'language-input')} defaultValue={sl || "en"}>
                                     <option value="en">English</option>
-                                    <option value="sr-Cyrl">Srpski (ćirilica)</option>
-                                    <option value="sr-Latn">Srpski (latinica)</option>
+                                    <option value="sr_cyr">Српски (ћирилица)</option>
+                                    <option value="sr_lat">Srpski (latinica)</option>
                                     <option value="fr">French</option>
                                     <option value="de">German</option>
                                     {/* Dodajte ostale jezike po potrebi */}
