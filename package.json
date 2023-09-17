@@ -1,7 +1,7 @@
 {
     "name": "roma-react",
     "version": "9.0.0",
-    "homepage": ".",
+    "homepage": "/start",
     "private": true,
     "dependencies": {
         "@fullcalendar/core": "^6.1.4",
@@ -30,7 +30,9 @@
         "web-vitals": "^3.1.1"
     },
     "scripts": {
-        "start": "copy .\\src\\configs\\env.dev.local .\\src\\configs\\env.js && set PORT=8351 && react-scripts start",
+        "start": "copy .\\src\\configs\\env.test.local .\\src\\configs\\env.js && set PORT=8351 && react-scripts start /start/",
+        "dev": "copy .\\src\\configs\\env.dev.local .\\src\\configs\\env.js && set PORT=8351 && react-scripts start /start/",
+        "prod": "copy .\\src\\configs\\env.prod.local .\\src\\configs\\env.js && set PORT=8351 && react-scripts start /start/",
         "build": "copy .\\src\\configs\\env.prod.local .\\src\\configs\\env.js && set GENERATE_SOURCEMAP=false && react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject",

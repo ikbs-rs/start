@@ -7,6 +7,7 @@ import axios from 'axios';
 import env from "../configs/env"
 import { useDispatch } from 'react-redux';
 import { setLanguage } from '../store/actions';
+//import https from 'https'
 
 export const Login = () => {
 
@@ -23,9 +24,10 @@ export const Login = () => {
         dispatch(setLanguage(sl));
     }
 
-    const handleButtonClick = (parameter) => {
+    const handleButtonClick = async (parameter) => {
+        console.log("***************DOSAO***********************")
         // Ovde nedostaje kod za logovanje
-        let isLoggedIn = true;
+        //let isLoggedIn = true;
         const usernameInput = document.getElementById("input").value; // Koristimo document.getElementById da bismo dohvatili vrijednost polja Username
         const passwordInput = document.getElementById("password-input").value; // Koristimo document.getElementById da bismo dohvatili vrijednost polja Password
         
@@ -33,9 +35,37 @@ export const Login = () => {
           username: usernameInput,
           password: passwordInput
         };
+       const url = `${env.JWT_BACK_URL}/adm/services/sign/in`;
+       //const url = `https://dev.app.ems.rs/badm/adm/services/sign/in`;
+       console.log(url, requestData, "*****333333333333333333333333333333333333333333**************")
+
+    // Postavljanje opcija zahteva za onemogućavanje provere validnosti sertifikata
+        // const axiosOptions = {
+        //     httpsAgent: new https.Agent({
+        //     rejectUnauthorized: false, // Postavljanje na `false` onemogućava proveru validnosti sertifikata
+        //     }),7
+        // };        
+        try {
+            console.log(url, requestData, "*****************url*********************")
+            const response = await axios.post(url, requestData);
+            console.log(response, "******************response********************")
+            if (response.status === 200) {
+                localStorage.setItem('token', response.data.token);
+                localStorage.setItem('refreshToken', response.data.refreshToken);
+                sessionStorage.setItem('isLoggedIn', 'true');
+                localStorage.setItem('sl', sl || "en");
+                navigate('/');
+            } else {
+                navigate('/login');
+            }
+        } catch (error) {
+            console.error(error);
+            // Handle error and possibly navigate back to login
+            navigate('/login');
+        }       
 
         //dispatch(setLanguage(sl)); // Postavite željeni jezik umesto 'en'
-
+/*
         axios
          .post(`${env.JWT_BACK_URL}/adm/services/sign/in`, requestData)
          .then((response) => {
@@ -58,10 +88,12 @@ export const Login = () => {
            }
          })
          .catch((error) => {
+            console.log(`${env.JWT_BACK_URL}/adm/services/sign/in`, "*-*-*-*-*-*-*-*ERROR-*-*-*-*-*-*-*-*", error)
            console.error(error);
            isLoggedIn = false; // Ako se dogodila pogreška, isLoggedIn će biti false
            //TODO vrati se na login
-         });        
+         }); 
+         */       
     }    
 
     return (
