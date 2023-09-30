@@ -74,8 +74,8 @@ export const translations = {
       logout: "Одјава",
       slogan: `Модеран и елегантан флексибила систем са премијерним изгледом за Про компанију.`,
       learnMore: "Сазнај више",
-      systemAdmin: "Системска администрација",
-      systemAdminDescription: "Изаберите ову опцију да приступите системској администрацији.",
+      systemAdmin: "Администрација корисника",
+      systemAdminDescription: "Изаберите ову опцију да приступите администрацији корисника.",
       commonLibrary: "Заједничка библиотека",
       commonLibraryDescription: "Овде можете попунити основне елементе система.",
       ticketlineSystem: "Систем за продавницу карата",
@@ -96,7 +96,10 @@ export const translations = {
       CONTACT: "КОНТАКТ",
       Phone: "Телефон",
       EMail: "Е-пошта",
-      Web: "Web"      
+      Web: "Web",
+      riskAssessment: "Процена ризика",
+      safetyProtectionWork: "Безбедност и заштита на раду",
+      sapLibrary: "SAP библиотеке",
     }
   };
   

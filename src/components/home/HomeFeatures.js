@@ -94,6 +94,45 @@ function HomeFeatures() {
           </a>
         </div>
         )}
+        { usePermission('ADMentry') && (
+        <div className="col-12 lg:col-4">
+          <a href={`${env.CMN_URL}?sl=${selectedLanguage}`}>
+            <div className="feature-box">
+              <img src={`assets/layout/images/landing/icon-responsive@2x.png`} alt="roma" style={{ cursor: 'pointer' }} />
+              <div style={{ cursor: 'pointer' }}>
+                <h3>{translations[currentLanguage].riskAssessment}</h3>
+                <p>{translations[currentLanguage].reportingDescription}</p>
+              </div>
+            </div>
+          </a>
+        </div>
+        )}   
+        { usePermission('ADMentry') && (
+        <div className="col-12 lg:col-4">
+          <a href={`${env.CMN_URL}?sl=${selectedLanguage}`}>
+            <div className="feature-box">
+              <img src={`assets/layout/images/landing/icon-document@2x.png`} alt="roma" style={{ cursor: 'pointer' }} />
+              <div style={{ cursor: 'pointer' }}>
+                <h3>{translations[currentLanguage].safetyProtectionWork}</h3>
+                <p>{translations[currentLanguage].reportingDescription}</p>
+              </div>
+            </div>
+          </a>
+        </div>
+        )}    
+        { usePermission('ADMentry') && (
+        <div className="col-12 lg:col-4">
+          <a href={`${env.CMN_URL}?sl=${selectedLanguage}`}>
+            <div className="feature-box">
+              <img src={`assets/layout/images/landing/icon-document@2x.png`} alt="roma" style={{ cursor: 'pointer' }} />
+              <div style={{ cursor: 'pointer' }}>
+                <h3>{translations[currentLanguage].sapLibrary}</h3>
+                <p>{translations[currentLanguage].reportingDescription}</p>
+              </div>
+            </div>
+          </a>
+        </div>
+        )}                  
         <div className="col-12 lg:col-4">
           <a href="https://www.ticketline.rs/" target="_blank">
             <div className="feature-box">

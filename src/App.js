@@ -39,9 +39,9 @@ const App =  () => {
           <div className="landing-wrapper">
             <Header scrollToDiv={scrollToDiv} />
             {usePermission('Modules', 'par1', 'par2') && <Modules />}
-            <News />
+            {/* <News />
             <News1 />              
-            <Pricing />
+            <Pricing /> */}
             <Footer />
           </div>
           <script src="./components/home/js/HomeScript.js"></script>      

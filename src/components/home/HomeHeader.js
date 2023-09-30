@@ -26,7 +26,7 @@ const HomeHeader = ({ scrollToDiv }) => {
   return (
     <div id="home" className="landing-header">
       <div>
-      <div className="landing-topbar" style={{ backgroundColor: "#173042" }}>
+     <div className="landing-topbar" style={{ backgroundColor: "#750404" }}>  {/*  "#173042" */}
         <span>
         <img src={`assets/layout/images/logo-beli2.png`} alt="Ticket line" style={{ width: "124.7px", height: "37px" }}/>
         </span>
@@ -42,15 +42,16 @@ const HomeHeader = ({ scrollToDiv }) => {
           <li>
             <a onClick={() => scrollToDiv("features")}>{translations[selLen].modules}</a>
           </li>
-          <li>
+          {/* <li>
             <a onClick={() => scrollToDiv("news")}>{translations[selLen].news}</a>
           </li>
           <li>
             <a onClick={() => scrollToDiv("pricing")}>{translations[selLen].pricing}</a>
           </li>
+          */}
           <li>
             <a onClick={() => handleLogout()}>{translations[selLen].logout}</a>
-          </li>          
+          </li>           
         </ul>
       </div>
       </div>

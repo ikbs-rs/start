@@ -3313,14 +3313,14 @@ a {
   padding: 8px 58px;
 }
 .landing-body .landing-wrapper .landing-features {
-  border-top: 8px solid #c7e7f2;
+  border-top: 8px solid #f2c7c7;
   padding: 115px 145px 81px 145px;
   background-color: #f4f4f9;
 }
 .landing-body .landing-wrapper .landing-features .features-topic-shadow {
   width: 140px;
   height: 55px;
-  background-color: #c7e7f2;
+  background-color: #f2c7c7;
   position: relative;
   top: -115px;
   left: -2px;
@@ -3328,7 +3328,7 @@ a {
 .landing-body .landing-wrapper .landing-features .features-topic-shadow .features-topic {
   width: 140px;
   height: 49px;
-  background-color: #1cb9d7;
+  background-color: #be3528;
   color: #ffffff;
   padding: 12px;
   letter-spacing: 1px;

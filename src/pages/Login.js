@@ -14,20 +14,20 @@ export const Login = () => {
     const [checked, setChecked] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    //const search = window.location.search;    
-    //const params = new URLSearchParams(search);
+    // const search = window.location.search;    
+    // const params = new URLSearchParams(search);
     let sl = localStorage.getItem('sl')||'en' //params.get('sl');   
 
     const onInputChange = (e, name) => {
         sl= e.target.value
-        //setCurrentLanguage(sl)
+        // setCurrentLanguage(sl)
         dispatch(setLanguage(sl));
     }
 
     const handleButtonClick = async (parameter) => {
-        console.log("***************DOSAO***********************")
+        //console.log("***************DOSAO***********************")
         // Ovde nedostaje kod za logovanje
-        //let isLoggedIn = true;
+        // let isLoggedIn = true;
         const usernameInput = document.getElementById("input").value; // Koristimo document.getElementById da bismo dohvatili vrijednost polja Username
         const passwordInput = document.getElementById("password-input").value; // Koristimo document.getElementById da bismo dohvatili vrijednost polja Password
         
@@ -36,8 +36,8 @@ export const Login = () => {
           password: passwordInput
         };
        const url = `${env.JWT_BACK_URL}/adm/services/sign/in`;
-       //const url = `https://dev.app.ems.rs/badm/adm/services/sign/in`;
-       console.log(url, requestData, "*****333333333333333333333333333333333333333333**************")
+       // const url = `https://dev.app.ems.rs/badm/adm/services/sign/in`;
+       // console.log(url, requestData, "*****333333333333333333333333333333333333333333**************")
 
     // Postavljanje opcija zahteva za onemogućavanje provere validnosti sertifikata
         // const axiosOptions = {
@@ -46,18 +46,20 @@ export const Login = () => {
         //     }),7
         // };        
         try {
-            console.log(url, requestData, "*****************url*********************")
+            //console.log(url, requestData, "*****************url*********************")
             const response = await axios.post(url, requestData);
-            console.log(response, "******************response********************")
             if (response.status === 200) {
                 localStorage.setItem('token', response.data.token);
                 localStorage.setItem('refreshToken', response.data.refreshToken);
+                localStorage.setItem('userId', response.data.userId);
                 sessionStorage.setItem('isLoggedIn', 'true');
                 localStorage.setItem('sl', sl || "en");
                 navigate('/');
             } else {
+                console.log("******************response.login********************")
                 navigate('/login');
             }
+            console.log("******************kraj********************")
         } catch (error) {
             console.error(error);
             // Handle error and possibly navigate back to login
