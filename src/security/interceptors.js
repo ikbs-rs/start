@@ -35,7 +35,7 @@ const useTokenValidation = () => {
   return isLoggedIn;
 };
 
-const usePermission = (objId, par1, par2) => {
+const usePermission = async (objId, par1, par2) => {
   const [hasPermission, setHasPermission] = useState(false);
 
   useEffect(() => {
