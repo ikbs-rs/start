@@ -46,7 +46,7 @@ export const Login = () => {
         //     }),7
         // };        
         try {
-            //console.log(url, requestData, "*****************url*********************")
+            console.log(url, requestData, "*****************url*********************", env.JWT_BACK_URL)
             const response = await axios.post(url, requestData);
             if (response.status === 200) {
                 localStorage.setItem('token', response.data.token);
