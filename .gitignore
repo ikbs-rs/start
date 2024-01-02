@@ -3,11 +3,13 @@
 .sass-cache
 sassdoc
 .vscode
+env.js
 
 # dependencies
 /node_modules
 package-lock.json
 yarn.lock
+/src/configs/env.js
 
 # testing
 /coverage
