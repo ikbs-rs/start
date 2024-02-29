@@ -8,6 +8,7 @@ const env = {
     CMN_BACK_URL: 'https://82.117.213.106/bcmn',
     TIC_BACK_URL: 'https://82.117.213.106/btic',
     IMG_BACK_URL: 'https://82.117.213.106/img',
+    REACT_APP_SITE_KEY: '6LcMQYQpAAAAALa_NZ9gNPllzWee1zuX5oSk6V-t',
   };
   
   export default env;
