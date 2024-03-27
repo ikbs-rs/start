@@ -12,8 +12,8 @@ import ReCAPTCHA from 'react-google-recaptcha';
 
 export const Login = () => {
     console.log(env.REACT_APP_SITE_KEY, "****************************************")
-    const [checked, setChecked] = useState(false);
-    const [success, setSuccess] = useState(false);
+    const [checked, setChecked] = useState(true);
+    const [success, setSuccess] = useState(true);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     // const search = window.location.search;    
@@ -147,10 +147,10 @@ export const Login = () => {
                                 </select>
                             </div>
                         </div>
-                        <div className="col-12 sm:col-6 md:col-6 rememberme-container">
+                        {/* <div className="col-12 sm:col-6 md:col-6 rememberme-container">
                             <Checkbox checked={checked} onChange={(e) => setChecked(e.checked)} />
                             <label> Remember me</label>
-                        </div>
+                        </div> */}
 
                         <div className="col-12 sm:col-6 md:col-6 forgetpassword-container">
                             <a href="/" className="forget-password">
@@ -161,11 +161,11 @@ export const Login = () => {
                         <div className="col-12 sm:col-6 md:col-6">
                             <Button label="Sign In" icon="pi pi-check" onClick={() => handleButtonClick('app')} />
                         </div>
-                        <ReCAPTCHA
+                        {/* <ReCAPTCHA
                             sitekey={env.REACT_APP_SITE_KEY}
                             onChange={onChange}
                             onExpired={onExpired}
-                        />
+                        /> */}
                     </div>
                 </div>
             </div>
