@@ -14,6 +14,12 @@ export const Login = () => {
     console.log(env.REACT_APP_SITE_KEY, "****************************************")
     const [checked, setChecked] = useState(true);
     const [success, setSuccess] = useState(true);
+
+
+    let [numberChannell, setNumberChannell] = useState(0)
+    let [channells, setChannells] = useState([{}])
+    let [channell, setChannell] = useState(null)
+
     const dispatch = useDispatch();
     const navigate = useNavigate();
     // const search = window.location.search;    
@@ -34,12 +40,25 @@ export const Login = () => {
         setSuccess(false)
     }
 
+    const createJson = async (id, admin, username, channels) => {
+        // Kreiramo objekat koji odgovara željenoj strukturi
+        const jsonObject = {
+            id: id,
+            admin: admin,
+            username: username,
+            channels: channels.map(channel => ({
+                id: channel.id,
+                text: channel.text
+            }))
+        };
+
+        return JSON.stringify(jsonObject);
+    }
+
     const handleButtonClick = async (parameter) => {
-        //console.log("***************DOSAO***********************")
-        // Ovde nedostaje kod za logovanje
-        // let isLoggedIn = true;
-        const usernameInput = document.getElementById("input").value; // Koristimo document.getElementById da bismo dohvatili vrijednost polja Username
-        const passwordInput = document.getElementById("password-input").value; // Koristimo document.getElementById da bismo dohvatili vrijednost polja Password
+
+        const usernameInput = document.getElementById("input").value;
+        const passwordInput = document.getElementById("password-input").value;
 
         const requestData = {
             username: usernameInput,
@@ -60,6 +79,27 @@ export const Login = () => {
                 console.log(url, requestData, "*****************url*********************", env.JWT_BACK_URL)
                 const response = await axios.post(url, requestData);
                 if (response.status === 200) {
+
+                    const usrUrl = `${env.ADM_BACK_URL}/adm/user/${response.data.userId}`; 
+                    const urlCh = `${env.ADM_BACK_URL}/adm/user/_v/lista/?stm=adm_userchannel_v&objid=${response.data.userId}`;                   
+                    const headers = {
+                        Authorization: response.data.token
+                    };
+                    console.log(usrUrl, "***************************************************", urlCh)                     
+                    const rezultatUsr = await axios.get(usrUrl, { headers });  
+                    const objUsr = rezultatUsr.data.item;
+                    console.log(objUsr, "* 00**************************************************")                     
+                    const rezultat = await axios.get(urlCh, { headers });
+                    const objChannel =  rezultat.data.item; 
+                    console.log(objChannel, "* 01**************************************************")                                                    
+
+                    setNumberChannell(objChannel.length);
+                    setChannells(objChannel);
+
+                    const userJson = await createJson(objUsr.id, objUsr.admin, objUsr.username, objChannel);
+                    console.log(userJson, "* 02**************************************************") 
+
+                    localStorage.setItem('user', userJson);
                     localStorage.setItem('token', response.data.token);
                     localStorage.setItem('refreshToken', response.data.refreshToken);
                     localStorage.setItem('userId', response.data.userId);
