@@ -42,10 +42,15 @@ export const Login = () => {
 
     const createJson = async (id, admin, username, channels) => {
         // Kreiramo objekat koji odgovara željenoj strukturi
+        let channel = null
+        if (channels[0]){
+            channel = channels[0].id
+        }
         const jsonObject = {
             id: id,
             admin: admin,
             username: username,
+            kanal: channel,
             channels: channels.map(channel => ({
                 id: channel.id,
                 text: channel.text
