@@ -38,9 +38,10 @@
         "local": "copy .\\src\\configs\\env.local.local .\\src\\configs\\env.js && set PORT=8351 && react-scripts start /start/",
         "bdev": "copy .\\src\\configs\\env.bdev.local .\\src\\configs\\env.js && set PORT=8351 && react-scripts start /start/",
         "sdev": "copy .\\src\\configs\\env.sdev.local .\\src\\configs\\env.js && set PORT=8351 && react-scripts start /start/",
+        "devTic": "cp ./src/configs/env.devTic.local ./src/configs/env.js && export PORT=8351 && react-scripts start /start/",
         "boban": "copy .\\src\\configs\\env.boban.local .\\src\\configs\\env.js && set PORT=8351 && react-scripts start /start/",
         "prod": "copy .\\src\\configs\\env.prod.local .\\src\\configs\\env.js && set PORT=8351 && react-scripts start /start/",
-        "build": "copy .\\src\\configs\\env.prod.local .\\src\\configs\\env.js && set GENERATE_SOURCEMAP=false && react-scripts build",
+        "build": "cp ./src/configs/env.devTic.local ./src/configs/env.js && export PORT=8351 && export GENERATE_SOURCEMAP=false && react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
         "format": "prettier --write \"src/**/*.{js,ts,tsx}\""
