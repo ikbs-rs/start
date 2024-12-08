@@ -3,14 +3,55 @@ import { Button } from "primereact/button";
 import { translations } from "../../configs/translations";
 import { useNavigate } from "react-router-dom";
 import './index.css';
+import { AdmUserService } from "./AdmUserService";
+import { Avatar } from 'primereact/avatar';
+import { Badge } from 'primereact/badge';
+import env from '../../configs/env';
+import { classNames } from 'primereact/utils';
 
-const HomeHeader = ({ scrollToDiv }) => {
+const HomeHeader = (props, { scrollToDiv }) => {
     const selLen = localStorage.getItem('sl') || 'en';
     const [currentLanguage, setCurrentLanguage] = useState(selLen);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 1024);
     const navigate = useNavigate();
+    /*********************************************************** */
+    let i = 0
+    const b = `${env.DOMEN}/btic/assets/img/zap/1774496601038262272.jpg`
+    const selectedLanguage = localStorage.getItem('sl') || 'en'
+    const userId = localStorage.getItem('userId') || -1
+    const [user, setUser] = useState({});
+    const [slika, setSlika] = useState('');
 
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                ++i
+                if (i < 2) {
+                    const admUserService = new AdmUserService();
+                    const data = await admUserService.getAdmUser(userId);
+                    // console.log(data, "/////////////////////////////////////////////////////////////getListaLL////////////////////////////////////////////////////////////////////////")
+                    setUser(data);
+                    setSlika(`${env.DOMEN}/btic/assets/img/zap/${data.id}.jpg`)
+                }
+            } catch (error) {
+                console.error(error);
+                // Obrada greške ako je potrebna
+            }
+        }
+        fetchData();
+    }, []);
+
+    const onTopbarItemClick = (event, item) => {
+        if (props.onTopbarItemClick) {
+            props.onTopbarItemClick({
+                originalEvent: event,
+                item: item
+            });
+        }
+    };
+
+    /*********************************************************** */
     useEffect(() => {
         const handleResize = () => {
             setIsMobile(window.innerWidth <= 1024);
@@ -23,9 +64,9 @@ const HomeHeader = ({ scrollToDiv }) => {
         setIsMenuOpen(prevState => !prevState);
     };
     const handleLogout = () => {
-      localStorage.removeItem("token");
-      sessionStorage.removeItem("isLoggedIn");
-      navigate('/login');
+        localStorage.removeItem("token");
+        sessionStorage.removeItem("isLoggedIn");
+        navigate('/login');
     };
     const handleMenuItemClick = (callback) => {
         callback();
@@ -45,21 +86,25 @@ const HomeHeader = ({ scrollToDiv }) => {
                             <img src={`assets/layout/images/landing/icon-ellipsis-v.svg`} alt="Menu" />
                         </button>
                     )} */}
+                    <>
+                        {!isMobile && (
+                            <ul className="layout-profile-name desktop-menu">
+                                <li>
+                                    <a onClick={() => scrollToDiv("home")}>{translations[selLen].home}</a>
+                                </li>
+                                <li>
+                                    <a onClick={() => scrollToDiv("features")}>{translations[selLen].modules}</a>
+                                </li>
+                                <li>
+                                    <a onClick={handleLogout}>{translations[selLen].logout}</a>
+                                </li>
+                            </ul>
+                        )}
+                        <span style={{ color: "#fff", fontSize: 14 }}>
+                            {`${user.firstname} ${user.lastname || ''}`}
+                        </span>
 
-                    {!isMobile && (
-                        <ul className="layout-profile-name desktop-menu">
-                            <li>
-                                <a onClick={() => scrollToDiv("home")}>{translations[selLen].home}</a>
-                            </li>
-                            <li>
-                                <a onClick={() => scrollToDiv("features")}>{translations[selLen].modules}</a>
-                            </li>
-                            <li>
-                                <a onClick={handleLogout}>{translations[selLen].logout}</a>
-                            </li>
-                        </ul>
-                    )}
-
+                    </>
                     {isMobile && (
                         <ul className={`layout-profile-name mobile-menu ${isMenuOpen ? 'menu-open' : ''}`}>
                             <li>
@@ -71,8 +116,11 @@ const HomeHeader = ({ scrollToDiv }) => {
                             <li>
                                 <a onClick={() => handleMenuItemClick(handleLogout)}>{translations[selLen].logout}</a>
                             </li>
+
+
                         </ul>
                     )}
+
                 </div>
             </div>
 

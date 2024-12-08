@@ -59,4 +59,41 @@
     border-radius: 2px;
   }
 
+
+
+  .landing-topbar {
+    display: flex;
+    justify-content: space-between; /* Poravnavanje elemenata na početak i kraj */
+    align-items: center; /* Vertikalno poravnanje */
+    background-color: #750404;
+    padding: 10px;
+  }
+  
+  .landing-topbar span {
+    display: inline-flex;
+    align-items: center;
+  }
+  
+  .layout-profile-name {
+    display: flex;
+    justify-content: flex-end; /* Poravnanje sa desne strane */
+    align-items: center;
+  }
+  
+  .layout-profile-name.mobile-menu {
+    display: none; /* Prikazivanje samo na mobilnim uređajima */
+  }
+  
+  /* Ovisno o širem ekranu, menja se stil */
+  @media (max-width: 1024px) {
+    .layout-profile-name.desktop-menu {
+      display: none; /* Prikazivanje samo na desktop verziji */
+    }
+  
+    .layout-profile-name.mobile-menu {
+      display: flex; /* Mobilna verzija menija */
+    }
+  }
+  
+
   

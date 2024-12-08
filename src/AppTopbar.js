@@ -1,9 +1,40 @@
 import React from 'react';
 import { classNames } from 'primereact/utils';
 import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { translations } from "./configs/translations";
+import { AdmUserService } from "./service/model/cmn/AdmUserService";
+import { Avatar } from 'primereact/avatar';
+import { Badge } from 'primereact/badge';
+import env from './configs/env';
 
 const AppTopbar = (props) => {
     const navigate = useNavigate();
+    let i = 0
+    const b = `${env.DOMEN}/btic/assets/img/zap/1774496601038262272.jpg`
+    const selectedLanguage = localStorage.getItem('sl') || 'en'
+    const userId = localStorage.getItem('userId') || -1
+    const [user, setUser] = useState({});
+    const [slika, setSlika] = useState('');
+
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                ++i
+                if (i < 2) {
+                    const admUserService = new AdmUserService();
+                    const data = await admUserService.getAdmUser(userId);
+                    // console.log(data, "/////////////////////////////////////////////////////////////getListaLL////////////////////////////////////////////////////////////////////////")
+                    setUser(data);
+                    setSlika(`${env.DOMEN}/btic/assets/img/zap/${data.id}.jpg`)
+                }
+            } catch (error) {
+                console.error(error);
+                // Obrada greške ako je potrebna
+            }
+        }
+        fetchData();
+    }, []);
 
     const onTopbarItemClick = (event, item) => {
         if (props.onTopbarItemClick) {
@@ -16,7 +47,7 @@ const AppTopbar = (props) => {
 
     return (
         <div className="layout-topbar">
-            <button type="button" className="p-link layout-right-panel-button layout-topbar-icon" onClick={props.onRightMenuButtonClick}>
+            {/* <button type="button" className="p-link layout-right-panel-button layout-topbar-icon" onClick={props.onRightMenuButtonClick}>
                 <i className="pi pi-ellipsis-v"></i>
             </button>
 
@@ -125,7 +156,7 @@ const AppTopbar = (props) => {
                         </li>
                     </ul>
                 </li>
-            </ul>
+            </ul> */}
         </div>
     );
 };
