@@ -64,8 +64,11 @@ const HomeHeader = (props, { scrollToDiv }) => {
         setIsMenuOpen(prevState => !prevState);
     };
     const handleLogout = () => {
-        localStorage.removeItem("token");
-        sessionStorage.removeItem("isLoggedIn");
+        localStorage.removeItem('user');
+        localStorage.removeItem('token');
+        localStorage.removeItem('refreshToken');
+        localStorage.removeItem('userId');
+        sessionStorage.setItem('isLoggedIn', 'false');
         navigate('/login');
     };
     const handleMenuItemClick = (callback) => {
@@ -101,7 +104,7 @@ const HomeHeader = (props, { scrollToDiv }) => {
                             </ul>
                         )}
                         <span style={{ color: "#fff", fontSize: 14 }}>
-                            {`${user.firstname} ${user.lastname || ''}`}
+                            {`${user?.firstname} ${user?.lastname || ''}`}
                         </span>
 
                     </>
