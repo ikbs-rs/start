@@ -10,6 +10,7 @@ env.js
 package-lock.json
 yarn.lock
 /src/configs/env.js
+/dist/site
 
 # testing
 /coverage
