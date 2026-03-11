@@ -1,7 +1,9 @@
 
+const normalizeToken = (token) => (token || '').toString().replace(/^Bearer\s+/i, '').trim();
+
 const getTokensLS = async () => {
-    const token = localStorage.getItem('token');
-    const refreshToken = localStorage.getItem('refreshToken');
+    const token = normalizeToken(localStorage.getItem('token'));
+    const refreshToken = normalizeToken(localStorage.getItem('refreshToken'));
 
     if (!token || !refreshToken) {
         return null;

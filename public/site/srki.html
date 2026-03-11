@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HRM Konsalting – Razvoj lidera i HR konsultacije</title>
+  <meta name="description" content="HRM Konsalting – Srđan Stanković. Obuke mekih veština, assessment potencijala, poslovni koučing, razvoj rukovodilaca. Kragujevac i Srbija.">
+  <meta name="keywords" content="HR konsalting, obuke, liderstvo, assessment, koučing, Srđan Stanković, razvoj talenata">
+
+  <!-- Preconnect za brže učitavanje fontova -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- AOS za animacije -->
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+  <style>
+    :root {
+      --bg: #0b1220;
+      --card: rgba(255,255,255,.06);
+      --card2: rgba(255,255,255,.08);
+      --border: rgba(255,255,255,.14);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.72);
+      --pink: #f87694;
+      --purple: #a23aa2;
+      --max: 1140px;
+      --radius: 18px;
+      --shadow: 0 30px 80px rgba(0,0,0,.45);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      color: var(--text);
+      background: radial-gradient(1200px 700px at 20% -10%, rgba(162,58,162,.24), transparent 60%),
+                  radial-gradient(900px 600px at 80% 10%, rgba(248,118,148,.22), transparent 55%),
+                  #070b14;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    a { color: inherit; text-decoration: none; transition: all 0.3s ease; }
+    a:hover { color: var(--pink); }
+
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 20px; }
+
+    /* ── HEADER ─────────────────────────────────────────────── */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(7,11,20,.55);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      transition: background 0.3s ease;
+    }
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 0;
+      gap: 14px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      letter-spacing: 0.2px;
+    }
+    .logo {
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--pink), var(--purple));
+      box-shadow: 0 18px 45px rgba(248,118,148,.18);
+      border: 1px solid rgba(255,255,255,.20);
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin: 0;
+      padding: 0;
+    }
+    nav a {
+      padding: 10px 12px;
+      border-radius: 999px;
+      color: rgba(255,255,255,.85);
+      font-weight: 600;
+    }
+    nav a:hover { background: rgba(255,255,255,.08); }
+
+    .nav-right { display: flex; align-items: center; gap: 10px; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 11px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.06);
+      color: rgba(255,255,255,.92);
+      font-weight: 700;
+      transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+      white-space: nowrap;
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+      background: rgba(255,255,255,.12);
+      border-color: var(--pink);
+      box-shadow: 0 4px 12px rgba(248,118,148,.2);
+    }
+
+    .btn.primary {
+      background: linear-gradient(135deg, var(--pink), var(--purple));
+      border-color: transparent;
+      color: white;
+      box-shadow: 0 8px 25px rgba(248,118,148,.3);
+    }
+    .btn.primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 35px rgba(248,118,148,.4);
+    }
+
+    /* ── HERO ─────────────────────────────────────────────── */
+    #hero {
+      padding: 140px 0 100px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    #hero h1 {
+      font-size: 3.5rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      background: linear-gradient(to right, var(--pink), var(--purple));
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+    #hero p {
+      font-size: 1.4rem;
+      max-width: 800px;
+      margin: 0 auto 2.5rem;
+      color: var(--muted);
+    }
+    #hero .btn { font-size: 1.1rem; padding: 14px 28px; }
+
+    /* ── ABOUT ─────────────────────────────────────────────── */
+    .section-head {
+      max-width: 800px;
+      margin: 0 auto 3rem;
+      text-align: center;
+    }
+    .section-head h2 {
+      font-size: 2.8rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+    }
+    .section-head p {
+      font-size: 1.15rem;
+      color: var(--muted);
+    }
+
+    /* ── SERVICES ─────────────────────────────────────────────── */
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow);
+    }
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 40px 100px rgba(0,0,0,.5);
+      border-color: var(--pink);
+    }
+    .card h3 {
+      font-size: 1.6rem;
+      margin-bottom: 1rem;
+      color: var(--text);
+    }
+    .card p {
+      font-size: 1rem;
+      color: var(--muted);
+    }
+
+    /* ── VALUES ─────────────────────────────────────────────── */
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+    }
+    .values-cta {
+      margin-top: 3rem;
+      text-align: center;
+      background: var(--card2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      box-shadow: var(--shadow);
+    }
+    .values-cta-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    .values-cta b {
+      font-size: 1.4rem;
+    }
+    .values-cta span {
+      font-size: 1.1rem;
+      color: var(--muted);
+    }
+
+    /* ── CONTACT ─────────────────────────────────────────────── */
+    #contact form {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    #contact input, #contact textarea {
+      padding: 12px 16px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--text);
+      font-size: 1rem;
+    }
+    #contact textarea { min-height: 120px; }
+    #contact button { cursor: pointer; }
+
+    footer {
+      margin-top: 2rem;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    /* Responzivnost */
+    @media (max-width: 768px) {
+      #hero h1 { font-size: 2.8rem; }
+      .nav { flex-direction: column; gap: 10px; }
+      .values-cta-inner { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body data-aos-easing="ease-in-out" data-aos-duration="600" data-aos-delay="0">
+
+  <!-- ── HEADER ─────────────────────────────────────────────── -->
+  <header>
+    <div class="wrap nav">
+      <div class="brand">
+        <div class="logo"></div>
+        HRM Konsalting
+      </div>
+      <nav>
+        <ul>
+          <li><a href="#hero">Početak</a></li>
+          <li><a href="#about">O nama</a></li>
+          <li><a href="#usluge">Usluge</a></li>
+          <li><a href="#assessment">Assessment</a></li>
+          <li><a href="#koucing">Koučing</a></li>
+          <li><a href="#vrednosti">Vrednosti</a></li>
+          <li><a href="#contact">Kontakt</a></li>
+        </ul>
+      </nav>
+      <div class="nav-right">
+        <a href="#contact" class="btn primary">Zakažite konsultaciju</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── HERO ─────────────────────────────────────────────── -->
+  <section id="hero" data-aos="fade-up">
+    <div class="wrap">
+      <h1>HRM Konsalting</h1>
+      <p>Od autoritativnog menadžera do autentičnog lidera. Specijalizovani za obuke mekih veština, assessment potencijala, poslovni koučing i kompletan HR konsalting.</p>
+      <a href="#contact" class="btn primary">Pozovite nas</a>
+    </div>
+  </section>
+
+  <!-- ── ABOUT ─────────────────────────────────────────────── -->
+  <section id="about">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>O nama</h2>
+        <p>Srđan Stanković, master pravnik i sertifikovani HR menadžer sa preko 20 godina iskustva, vodi tim sertifikovanih psihologa, pravnika i trenera. Fokusirani smo na praktičan pristup prilagođen potrebama klijenata.</p>
+      </div>
+      <div class="grid-3">
+        <div class="card">
+          <h3>Iskustvo</h3>
+          <p>Više od 15 godina na rukovodećim pozicijama, sertifikati iz NDI Washington, CPM Beograd, EBC*L, CEXAS, DISC Persolog, NLP.</p>
+        </div>
+        <div class="card">
+          <h3>Tim</h3>
+          <p>Sertifikovani psiholozi za procenu potencijala, pravnici za radno pravo, treneri i koučevi za individualni i timski razvoj.</p>
+        </div>
+        <div class="card">
+          <h3>Prilagođen pristup</h3>
+          <p>Polazimo od specifičnosti klijenta, sa opsežnom analizom i evaluacijom efekata programa za dugoročnu saradnju.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── USLUGE ─────────────────────────────────────────────── -->
+  <section id="usluge">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Naše usluge</h2>
+        <p>Prilagođene obuke i konsultacije za razvoj lidera, timova i HR procesa.</p>
+      </div>
+      <div class="grid-3">
+        <div class="card">
+          <h3>Obuke mekih veština</h3>
+          <p>Liderstvo, komunikacija, delegiranje, upravljanje stresom, emocionalna inteligencija, prezentacije.</p>
+        </div>
+        <div class="card">
+          <h3>HR Menadžment</h3>
+          <p>Uvođenje procesa, regrutacija, KPI, performance management, employee experience, talent menadžment.</p>
+        </div>
+        <div class="card">
+          <h3>Poslovni koučing</h3>
+          <p>Individualni i timski koučing, razvoj rukovodilaca, upravljanje promenama, onboarding.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── ASSESSMENT ─────────────────────────────────────────────── -->
+  <section id="assessment">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Assessment – Procena potencijala</h2>
+        <p>Identifikujemo liderski potencijal, stil rukovođenja, otpornost na stres i motivatore koristeći Hogan, Harrison i druge metode.</p>
+      </div>
+      <div class="grid-3">
+        <div class="card">
+          <h3>Metodologija</h3>
+          <p>Psihološko testiranje + individualni intervjui sa sertifikovanim psiholozima.</p>
+        </div>
+        <div class="card">
+          <h3>Benefiti</h3>
+          <p>Poboljšana motivacija, razvojni planovi, profil uspešnog zaposlenog za selekcije.</p>
+        </div>
+        <div class="card">
+          <h3>Rezultati</h3>
+          <p>Liderski potencijal, stil rukovođenja, tolerancija na stres, preporuke za obuke.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── KOUČING ─────────────────────────────────────────────── -->
+  <section id="koucing">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Poslovni i organizacioni koučing</h2>
+        <p>Individualni i timski koučing za razvoj rukovodilaca i upravljanje promenama.</p>
+      </div>
+      <div class="grid-3">
+        <div class="card">
+          <h3>Razvoj rukovodilaca</h3>
+          <p>Procena kompetencija, gap analiza, individualni razvojni planovi.</p>
+        </div>
+        <div class="card">
+          <h3>Individualni & timski koučing</h3>
+          <p>Za nove i iskusne rukovodioce, povezivanje ličnih izazova sa poslovnim ciljevima.</p>
+        </div>
+        <div class="card">
+          <h3>Business coaching</h3>
+          <p>Upravljanje promenama, rad sa timom, lični razvoj veština.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── VREDNOSTI ─────────────────────────────────────────────── -->
+  <section id="vrednosti">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Vrednosti koje živimo</h2>
+        <p>U svom radu negujemo sledeće vrednosti:</p>
+      </div>
+      <div class="values-grid">
+        <div class="card"><p>Posvećenost ljudima sa kojima radimo</p></div>
+        <div class="card"><p>Odgovornost i iskrenost</p></div>
+        <div class="card"><p>Stalno učenje i lični razvoj</p></div>
+        <div class="card"><p>Kreativnost i otvorenost</p></div>
+        <div class="card"><p>Kvalitet i profesionalnost</p></div>
+      </div>
+
+      <div class="values-cta">
+        <div class="values-cta-inner">
+          <div>
+            <b>Spremni ste za promenu?</b>
+            <span>Ako osećate da je vreme za lični ili poslovni iskorak – tu smo.</span>
+          </div>
+          <a href="#contact" class="btn primary values-btn">Javite se</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── KONTAKT ─────────────────────────────────────────────── -->
+  <section id="contact">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Kontakt</h2>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <p style="margin-top:0">
+            Šifra delatnosti: 7022<br/>
+            PIB: 115308392<br/>
+            Matični broj: 68263999<br/>
+            📍 Kragujevac / Srbija<br/>
+            📧 office@hrmkonsalting.rs<br/>
+            📞 +381 63 818 58 04
+          </p>
+        </div>
+
+        <div class="card">
+          <h3 style="margin-top:0">Pošaljite upit</h3>
+          <form id="contactForm">
+            <input name="name" placeholder="Ime" required />
+            <input name="email" type="email" placeholder="Email" required />
+            <textarea name="message" placeholder="Vaša poruka..." required></textarea>
+            <div class="form-actions">
+              <button class="btn primary" type="submit">Pošalji</button>
+              <span class="note" id="formNote">Forma je demo – može se povezati sa email servisom.</span>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <footer>
+        <div class="foot">
+          <span>© 2026 HRM Konsalting. Sva prava zadržana.</span>
+          <span><a href="#hero">Nazad na vrh ↑</a></span>
+        </div>
+      </footer>
+    </div>
+  </section>
+
+  <!-- AOS Script -->
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script>
+    AOS.init();
+
+    // Form demo
+    document.getElementById("contactForm")?.addEventListener("submit", (e) => {
+      e.preventDefault();
+      document.getElementById("formNote").textContent = "✅ Upit je poslat! (Demo – dodaj backend).";
+    });
+  </script>
+</body>
+</html>

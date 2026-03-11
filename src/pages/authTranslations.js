@@ -1,0 +1,61 @@
+const AUTH_TRANSLATIONS = {
+    en: {
+        welcome: "Welcome, please use the form to sign-in Ticketline network",
+        username: "Username",
+        password: "Password",
+        language: "Language",
+        forgetPassword: "Forget Password",
+        signIn: "Sign In",
+        resetPasswordTitle: "Reset password for your Ticketline account",
+        emailOrUsername: "Email or Username",
+        confirm: "Confirm",
+        back: "Back",
+        forgotRequired: "Enter email or username.",
+        forgotSuccess: "Request accepted. Check your email for next steps.",
+        english: "English",
+        serbianCyrillic: "Serbian (Cyrillic)",
+        serbianLatin: "Serbian (Latin)",
+        french: "French",
+        german: "German"
+    },
+    sr_lat: {
+        welcome: "Dobrodosli, koristite formu za prijavu na Ticketline mrezu",
+        username: "Korisnicko ime",
+        password: "Lozinka",
+        language: "Jezik",
+        forgetPassword: "Zaboravljena lozinka",
+        signIn: "Prijava",
+        resetPasswordTitle: "Resetovanje lozinke za Ticketline nalog",
+        emailOrUsername: "Email ili korisnicko ime",
+        confirm: "Potvrdi",
+        back: "Nazad",
+        forgotRequired: "Unesite email ili korisnicko ime.",
+        forgotSuccess: "Zahtev je prihvacen. Proverite email za dalje korake.",
+        english: "Engleski",
+        serbianCyrillic: "Srpski (cirilica)",
+        serbianLatin: "Srpski (latinica)",
+        french: "Francuski",
+        german: "Nemacki"
+    },
+    sr_cyr: {
+        welcome: "Добродошли, користите форму за пријаву на Ticketline мрежу",
+        username: "Корисничко име",
+        password: "Лозинка",
+        language: "Језик",
+        forgetPassword: "Заборављена лозинка",
+        signIn: "Пријава",
+        resetPasswordTitle: "Ресетовање лозинке за Ticketline налог",
+        emailOrUsername: "Email или корисничко име",
+        confirm: "Потврди",
+        back: "Назад",
+        forgotRequired: "Унесите email или корисничко име.",
+        forgotSuccess: "Захтев је прихваћен. Проверите email за даље кораке.",
+        english: "Енглески",
+        serbianCyrillic: "Српски (ћирилица)",
+        serbianLatin: "Српски (латиница)",
+        french: "Француски",
+        german: "Немачки"
+    }
+};
+
+export const getAuthTranslations = (language) => AUTH_TRANSLATIONS[language] || AUTH_TRANSLATIONS.en;

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+<meta charset="UTF-8">
+<title>Srbija + Kosovo | Gradovi i Opštine</title>
+
+<link rel="stylesheet"
+href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<style>
+body{margin:0;padding:0;}
+#map{height:100vh;width:100vw;}
+</style>
+</head>
+
+<body>
+<div id="map"></div>
+
+<script>
+
+// ======================
+// MAPA
+// ======================
+const map = L.map('map',{
+ center:[44,20.5],
+ zoom:7,
+ minZoom:6,
+ maxZoom:12
+});
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+ attribution:'&copy; OpenStreetMap'
+}).addTo(map);
+
+
+// ====================================================
+// 1) SRBIJA + KOSOVO GEOJSON (UBACI CEO FAJL OVDE)
+// ====================================================
+const lvl2Data = {"..."} ;
+
+
+// ====================================================
+// 2) GRADOVI GEOJSON (KASNIJE UBACI)
+// ====================================================
+const gradoviData = {"..."}; 
+
+
+// ====================================================
+// 3) OPŠTINE GEOJSON (KASNIJE UBACI)
+// ====================================================
+const opstineData = {"..."};
+
+
+// ======================
+// HELPER FUNKCIJE
+// ======================
+
+function extractRingsLatLng(feature){
+ const rings=[];
+ const g=feature.geometry;
+
+ if(g.type==="Polygon"){
+  g.coordinates.forEach(r=>{
+   rings.push(r.map(([lng,lat])=>[lat,lng]));
+  });
+ }
+
+ if(g.type==="MultiPolygon"){
+  g.coordinates.forEach(poly=>{
+   poly.forEach(r=>{
+    rings.push(r.map(([lng,lat])=>[lat,lng]));
+   });
+  });
+ }
+
+ return rings;
+}
+
+function colorFromString(str){
+ let hash=0;
+ str=String(str||"");
+ for(let i=0;i<str.length;i++){
+  hash=str.charCodeAt(i)+((hash<<5)-hash);
+ }
+ const hue=Math.abs(hash)%360;
+ return `hsl(${hue},70%,50%)`;
+}
+
+
+// ======================
+// MASKA SRBIJA + KOSOVO
+// ======================
+
+const lvl2 = lvl2Data.features.filter(
+ f=>String(f?.properties?.admin_level)==="2"
+);
+
+const world=[
+ [-90,-180],
+ [-90,180],
+ [90,180],
+ [90,-180]
+];
+
+const holes=[];
+lvl2.forEach(f=>{
+ holes.push(...extractRingsLatLng(f));
+});
+
+L.polygon([world,...holes],{
+ stroke:false,
+ fillColor:"#FFF",
+ fillOpacity:0.9,
+ interactive:false
+}).addTo(map);
+
+// zoom na teritoriju
+map.fitBounds(L.geoJSON(lvl2).getBounds());
+
+
+// ======================
+// GRADOVI (OBOJENI)
+// ======================
+
+const gradoviLayer = L.geoJSON(gradoviData,{
+ style:(feature)=>{
+  const name=feature?.properties?.name||"Grad";
+  const c=colorFromString(name);
+  return{
+   color:c,
+   weight:2,
+   fillColor:c,
+   fillOpacity:0.18
+  };
+ },
+ onEachFeature:(feature,layer)=>{
+  const name=feature?.properties?.name||"Grad";
+  layer.bindPopup(`<b>${name}</b>`);
+ }
+}).addTo(map);
+
+
+// ======================
+// OPŠTINE (SAMO GRANICE)
+// ======================
+
+const opstineLayer = L.geoJSON(opstineData,{
+ style:(feature)=>{
+  const parent=feature?.properties?.grad||"";
+  const c=parent?colorFromString(parent):"#333";
+  return{
+   color:c,
+   weight:1,
+   fillOpacity:0
+  };
+ },
+ onEachFeature:(feature,layer)=>{
+  const name=feature?.properties?.name||"Opština";
+  layer.bindPopup(`<b>${name}</b>`);
+ }
+}).addTo(map);
+
+
+// ======================
+// KONTROLA SLOJEVA
+// ======================
+
+L.control.layers(null,{
+ "Gradovi":gradoviLayer,
+ "Opštine":opstineLayer
+},{collapsed:false}).addTo(map);
+
+</script>
+</body>
+</html>

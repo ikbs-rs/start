@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+  <meta charset="UTF-8">
+  <title>Mapa Srbije sa KiM</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <style>
+    body { margin: 0; padding: 0; }
+    #map { height: 100vh; width: 100vw; }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+
+  <script>
+    var map = L.map('map').setView([44.0, 20.5], 7); // bolji centar i zoom za celu Srbiju + KiM
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+
+    // Stil da granice budu vidljive
+    function style(feature) {
+      return {
+        color: "#ff0000",          // crvena linija
+        weight: 3,                 // debljina
+        opacity: 1,
+        fillColor: "#ffcccc",      // svetlo crvena ispuna
+        fillOpacity: 0.4
+      };
+    }
+
+    fetch('srbija-kim.geojson')  // promeni u tačno ime tvog fajla!!!
+      .then(response => {
+        if (!response.ok) throw new Error('Greška pri učitavanju: ' + response.status);
+        return response.json();
+      })
+      .then(data => {
+        console.log("GeoJSON učitan, broj feature-a:", data.features.length);
+        L.geoJSON(data, {
+          style: style,
+          onEachFeature: function(feature, layer) {
+            if (feature.properties && feature.properties.name) {
+              layer.bindPopup("<b>" + feature.properties.name + "</b><br>Admin level: " + feature.properties.admin_level);
+            }
+          }
+        }).addTo(map);
+
+        // Automatski zoom na granice (opciono)
+        // map.fitBounds(layer.getBounds());
+      })
+      .catch(error => {
+        console.error("Greška:", error);
+        alert("Ne može da učita GeoJSON fajl. Proveri konzolu (F12) i putanju do fajla.");
+      });
+  </script>
+</body>
+</html>

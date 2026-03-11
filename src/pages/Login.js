@@ -1,217 +1,168 @@
-import React, { useState } from 'react';
-import { InputText } from 'primereact/inputtext';
-import { Button } from 'primereact/button';
-import { Checkbox } from 'primereact/checkbox';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import env from "../configs/env"
-import { useDispatch } from 'react-redux';
-import { setLanguage } from '../store/actions';
-import ReCAPTCHA from 'react-google-recaptcha';
-//import https from 'https'
+import React, { useState } from "react";
+import { Box, Button, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import axios from "axios";
+import env from "../configs/env";
+import { setLanguage } from "../store/actions";
+import { setLoginSessionState } from "../security/interceptors";
+import { getAuthTranslations } from "./authTranslations";
+import "./Login.css";
+
+const normalizeToken = (token) => (token || "").toString().replace(/^Bearer\s+/i, "").trim();
+const buildAuthHeader = (token) => {
+    const normalized = normalizeToken(token);
+    return normalized ? `Bearer ${normalized}` : "";
+};
 
 export const Login = () => {
-    console.log(env.REACT_APP_SITE_KEY, "****************************************")
-    const [checked, setChecked] = useState(true);
-    const [success, setSuccess] = useState(true);
-
-
-    let [numberChannell, setNumberChannell] = useState(0)
-    let [channells, setChannells] = useState([{}])
-    let [channell, setChannell] = useState(null)
-
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    // const search = window.location.search;    
-    // const params = new URLSearchParams(search);
-    let sl = localStorage.getItem('sl') || 'sr_cyr' //params.get('sl');   
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [language, setLanguageState] = useState(localStorage.getItem("sl") || "sr_cyr");
+    const t = getAuthTranslations(language);
 
-    const onInputChange = (e, name) => {
-        sl = e.target.value
-        // setCurrentLanguage(sl)
-        dispatch(setLanguage(sl));
-    }
+    const onInputChange = (value) => {
+        setLanguageState(value);
+        localStorage.setItem("sl", value);
+        dispatch(setLanguage(value));
+    };
 
-    const onChange = (e) => {
-        setSuccess(true)
-    }
-
-    const onExpired = (e) => {
-        setSuccess(false)
-    }
-
-    const createJson = async (id, admin, username, channels) => {
-        // Kreiramo objekat koji odgovara željenoj strukturi
-        let channel = null
-        if (channels[0]){
-            channel = channels[0].id
+    const createJson = async (id, admin, userName, channels = []) => {
+        let channel = null;
+        if (channels[0]) {
+            channel = channels[0].id;
         }
-        const jsonObject = {
-            id: id,
-            admin: admin,
-            username: username,
+
+        return JSON.stringify({
+            id,
+            admin,
+            username: userName,
             kanal: channel,
-            channels: channels.map(channel => ({
-                id: channel.id,
-                text: channel.text
+            channels: channels.map((channelItem) => ({
+                id: channelItem.id,
+                text: channelItem.text
             }))
-        };
+        });
+    };
 
-        return JSON.stringify(jsonObject);
-    }
-
-    const handleButtonClick = async (parameter) => {
-
-        const usernameInput = document.getElementById("input").value;
-        const passwordInput = document.getElementById("password-input").value;
-
-        const requestData = {
-            username: usernameInput,
-            password: passwordInput
-        };
+    const handleButtonClick = async () => {
+        const requestData = { username, password };
+        console.log(username, "###############",password);
         const url = `${env.JWT_BACK_URL}/adm/services/sign/in`;
-        // const url = `https://dev.app.ems.rs/badm/adm/services/sign/in`;
-        // console.log(url, requestData, "*****333333333333333333333333333333333333333333**************")
 
-        // Postavljanje opcija zahteva za onemogućavanje provere validnosti sertifikata
-        // const axiosOptions = {
-        //     httpsAgent: new https.Agent({
-        //     rejectUnauthorized: false, // Postavljanje na `false` onemogućava proveru validnosti sertifikata
-        //     }),7
-        // };        
         try {
-            if (success) {
-                console.log(url, requestData, "*****************url*********************", env.JWT_BACK_URL)
-                const response = await axios.post(url, requestData);
-                if (response.status === 200) {
+            const response = await axios.post(url, requestData);
+            const normalizedToken = normalizeToken(response?.data?.token);
+            const normalizedRefreshToken = normalizeToken(response?.data?.refreshToken);
 
-                    const usrUrl = `${env.ADM_BACK_URL}/adm/user/${response.data.userId}`; 
-                    const urlCh = `${env.ADM_BACK_URL}/adm/user/_v/lista/?stm=adm_userchannel_v&objid=${response.data.userId}`;                   
-                    const headers = {
-                        Authorization: response.data.token
-                    };
-                    console.log(usrUrl, "***************************************************", urlCh)                     
-                    const rezultatUsr = await axios.get(usrUrl, { headers });  
-                    const objUsr = rezultatUsr.data.item;
-                    console.log(objUsr, "* 00**************************************************")                     
-                    const rezultat = await axios.get(urlCh, { headers });
-                    const objChannel =  rezultat.data.item; 
-                    console.log(objChannel, "* 01**************************************************")                                                    
-
-                    setNumberChannell(objChannel.length);
-                    setChannells(objChannel);
-
-                    const userJson = await createJson(objUsr.id, objUsr.admin, objUsr.username, objChannel);
-                    console.log(userJson, "* 02**************************************************") 
-
-                    localStorage.setItem('user', userJson);
-                    localStorage.setItem('token', response.data.token);
-                    localStorage.setItem('refreshToken', response.data.refreshToken);
-                    localStorage.setItem('userId', response.data.userId);
-                    sessionStorage.setItem('isLoggedIn', 'true');
-                    localStorage.setItem('sl', sl || "sr_cyr");
-                    navigate('/');
-                } else {
-                    console.log("******************response.login********************")
-                    navigate('/login');
-                }
-                console.log("******************kraj********************")
-            } else {
-                console.error("******************reChepcha********************")
-                navigate('/login');
+            if (!normalizedToken) {
+                throw new Error("Token missing in sign-in response.");
             }
+
+            localStorage.setItem("token", normalizedToken);
+            localStorage.setItem("refreshToken", normalizedRefreshToken);
+            localStorage.setItem("userId", response.data.userId);
+            localStorage.setItem("sl", language || "sr_cyr");
+            setLoginSessionState(true);
+
+            const usrUrl = `${env.ADM_BACK_URL}/adm/user/${response.data.userId}`;
+            const urlCh = `${env.ADM_BACK_URL}/adm/user/_v/lista/?stm=adm_userchannel_v&objid=${response.data.userId}`;
+            const headers = { Authorization: buildAuthHeader(normalizedToken) };
+
+            let userJson = await createJson(response.data.userId, false, username, []);
+
+            try {
+                const rezultatUsr = await axios.get(usrUrl, { headers });
+                const objUsr = rezultatUsr.data.item;
+                const rezultat = await axios.get(urlCh, { headers });
+                const objChannel = rezultat.data.item;
+                userJson = await createJson(objUsr.id, objUsr.admin, objUsr.username, objChannel);
+            } catch (detailsError) {
+                console.error(detailsError);
+            }
+
+            localStorage.setItem("user", userJson);
+            navigate("/", { replace: true });
         } catch (error) {
             console.error(error);
-            // Handle error and possibly navigate back to login
-            navigate('/login');
+            setLoginSessionState(false);
+            navigate("/login", { replace: true });
         }
-
-        //dispatch(setLanguage(sl)); // Postavite željeni jezik umesto 'en'
-        /*
-                axios
-                 .post(`${env.JWT_BACK_URL}/adm/services/sign/in`, requestData)
-                 .then((response) => {
-                   isLoggedIn = response.status === 200; // Ako je status 200, isLoggedIn će biti true
-                   if (isLoggedIn) {
-                     //TODO idi na pocetnu stranicu
-                     localStorage.setItem('token', response.data.token);
-                     localStorage.setItem('refreshToken', response.data.refreshToken);
-                     sessionStorage.setItem('isLoggedIn', 'true');
-                     localStorage.setItem('sl', sl||"en");
-                     navigate(`/login}`);
-                     //const newUrl = `${window.location.pathname}?sl=${sl||"en"}`;
-                     //window.location.replace(newUrl);
-                     //dispatch(setLanguage(sl));
-        
-                    navigate('/');
-                   } else {
-                     //TODO vrati se na login
-                     navigate(`/login}`);
-                   }
-                 })
-                 .catch((error) => {
-                    console.log(`${env.JWT_BACK_URL}/adm/services/sign/in`, "*-*-*-*-*-*-*-*ERROR-*-*-*-*-*-*-*-*", error)
-                   console.error(error);
-                   isLoggedIn = false; // Ako se dogodila pogreška, isLoggedIn će biti false
-                   //TODO vrati se na login
-                 }); 
-                 */
-    }
+    };
 
     return (
-        <div className="login-body">
-            <div className="card login-panel p-fluid">
+        <div className="login-body mui-login-body">
+            <div className="card login-panel p-fluid mui-login-panel">
                 <div className="login-panel-content">
-                    <div className="grid">
-                        <div className="col-12 sm:col-6 md:col-6 logo-container">
-                            <img src="assets/layout/images/logo-tl.png" alt="Ticketline" style={{ width: "155.88px", height: "46.25px" }} />
-                            <span className="guest-sign-in">Welcome, please use the form to sign-in Ticketline network</span>
-                        </div>
-                        <div className="col-12 username-container">
-                            <label>Username</label>
-                            <div className="login-input">
-                                <InputText id="input" type="text" />
-                            </div>
-                        </div>
-                        <div className="col-12 password-container">
-                            <label>Password</label>
-                            <div className="login-input">
-                                <InputText id="password-input" type="password" />
-                            </div>
-                        </div>
-                        <div className="col-12 language-container">
-                            <label>Language</label>
-                            <div className="login-input">
-                                <select id="language-input" onChange={(e) => onInputChange(e, 'language-input')} defaultValue={sl || "en"}>
-                                    <option value="en">English</option>
-                                    <option value="sr_cyr">Српски (ћирилица)</option>
-                                    <option value="sr_lat">Srpski (latinica)</option>
-                                    <option value="fr">French</option>
-                                    <option value="de">German</option>
-                                    {/* Dodajte ostale jezike po potrebi */}
-                                </select>
-                            </div>
-                        </div>
-                        {/* <div className="col-12 sm:col-6 md:col-6 rememberme-container">
-                            <Checkbox checked={checked} onChange={(e) => setChecked(e.checked)} />
-                            <label> Remember me</label>
-                        </div> */}
+                    <Box sx={{ width: "100%", maxWidth: 420, ml: "auto", p: { xs: 2, md: 3 } }}>
+                        <Box className="logo-container">
+                            <img src="assets/layout/images/ems-logo-novi-1-1.png" alt="EMS" className="auth-logo" />
+                            <span className="guest-sign-in">{t.welcome}</span>
+                        </Box>
 
-                        <div className="col-12 sm:col-6 md:col-6 forgetpassword-container">
-                            <a href="/" className="forget-password">
-                                Forget Password
-                            </a>
-                        </div>
+                        <Box sx={{ width: "100%" }}>
+                            <Box className="username-container" sx={{ mt: 2 }}>
+                                <Typography component="label" htmlFor="input">{t.username}</Typography>
+                                <div className="login-input">
+                                    <TextField
+                                        id="input"
+                                        type="text"
+                                        value={username}
+                                        onChange={(e) => setUsername(e.target.value)}
+                                        fullWidth
+                                        size="small"
+                                    />
+                                </div>
+                            </Box>
 
-                        <div className="col-12 sm:col-6 md:col-6">
-                            <Button label="Sign In" icon="pi pi-check" onClick={() => handleButtonClick('app')} />
-                        </div>
-                        {/* <ReCAPTCHA
-                            sitekey={env.REACT_APP_SITE_KEY}
-                            onChange={onChange}
-                            onExpired={onExpired}
-                        /> */}
-                    </div>
+                            <Box className="password-container" sx={{ mt: 2.5 }}>
+                                <Typography component="label" htmlFor="password-input">{t.password}</Typography>
+                                <div className="login-input">
+                                    <TextField
+                                        id="password-input"
+                                        type="password"
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                        fullWidth
+                                        size="small"
+                                    />
+                                </div>
+                            </Box>
+
+                            <Box className="language-container" sx={{ mt: 2.5 }}>
+                                <Typography component="label" htmlFor="language-input">{t.language}</Typography>
+                                <div className="login-input">
+                                    <FormControl fullWidth size="small">
+                                        <InputLabel id="language-label">{t.language}</InputLabel>
+                                        <Select
+                                            labelId="language-label"
+                                            id="language-input"
+                                            value={language}
+                                            label={t.language}
+                                            onChange={(e) => onInputChange(e.target.value)}
+                                        >
+                                            <MenuItem value="en">{t.english}</MenuItem>
+                                            <MenuItem value="sr_cyr">{t.serbianCyrillic}</MenuItem>
+                                            <MenuItem value="sr_lat">{t.serbianLatin}</MenuItem>
+                                            <MenuItem value="fr">{t.french}</MenuItem>
+                                            <MenuItem value="de">{t.german}</MenuItem>
+                                        </Select>
+                                    </FormControl>
+                                </div>
+                            </Box>
+
+                            <Box sx={{ mt: 3, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 2 }}>
+                                <Button component={Link} to="/forgot-password" variant="outlined" className="auth-action-btn">
+                                    {t.forgetPassword}
+                                </Button>
+                                <Button variant="outlined" className="auth-action-btn" onClick={handleButtonClick}>
+                                    {t.signIn}
+                                </Button>
+                            </Box>
+                        </Box>
+                    </Box>
                 </div>
             </div>
         </div>

@@ -2,6 +2,7 @@ import React from 'react';
 import { classNames } from 'primereact/utils';
 import { TabView, TabPanel } from 'primereact/tabview';
 import { ProgressBar } from 'primereact/progressbar';
+import { rightMenuMessages } from './configs/rightMenuMessages';
 
 const AppRightMenu = (props) => {
     return (
@@ -61,35 +62,21 @@ const AppRightMenu = (props) => {
                 </TabPanel>
 
                 <TabPanel header="Messages">
-                    <div className="messages-title">
-                        <span>November 13, 2018</span>
-                    </div>
-                    <div className="messages-content grid col">
-                        <div className="time col-4">00:00 GMT+03:00</div>
-                        <div className="message-1 col-8">All systems reporting at 100%</div>
-                    </div>
-
-                    <div className="messages-title">
-                        <span>November 12, 2018</span>
-                    </div>
-                    <div className="messages-content grid col">
-                        <span className="time col-4">00:00 GMT+03:00</span>
-                        <span className="message-1 col-8">All systems reporting at 100%</span>
-                    </div>
-
-                    <div className="messages-title">
-                        <span>November 7, 2018</span>
-                    </div>
-                    <div className="messages-content grid col">
-                        <span className="time col-4">09:23 GMT+03:00</span>
-                        <span className="message-1 col-8">Everything operating normally.</span>
-
-                        <span className="time col-4">08:58 GMT+03:00</span>
-                        <span className="message-2 col-8">We're investigating delays inupdates to PrimeFaces.org.</span>
-
-                        <span className="time col-4">08:50 GMT+03:00</span>
-                        <span className="message-2 col-8">We are investigating reports of elevated error rates.</span>
-                    </div>
+                    {rightMenuMessages.map((group) => (
+                        <React.Fragment key={group.date}>
+                            <div className="messages-title">
+                                <span>{group.date}</span>
+                            </div>
+                            <div className="messages-content grid col">
+                                {group.items.map((item) => (
+                                    <React.Fragment key={`${group.date}-${item.time}-${item.text}`}>
+                                        <span className="time col-4">{item.time}</span>
+                                        <span className={`${item.variant} col-8`}>{item.text}</span>
+                                    </React.Fragment>
+                                ))}
+                            </div>
+                        </React.Fragment>
+                    ))}
                 </TabPanel>
             </TabView>
         </div>

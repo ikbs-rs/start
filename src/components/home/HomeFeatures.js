@@ -1,153 +1,146 @@
-import React, { useState, useEffect } from "react";
-//import { useNavigate } from 'react-router-dom';
-//import axios from 'axios';
-import env from "../../configs/env"
-import './index.css';
+import React from "react";
+import { Box, Card, CardContent, Container, Typography } from "@mui/material";
+import HeadsetMicIcon from "@mui/icons-material/HeadsetMic";
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
+import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
+import HealthAndSafetyIcon from "@mui/icons-material/HealthAndSafety";
+import RecyclingIcon from "@mui/icons-material/Recycling";
+import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
+import GavelIcon from "@mui/icons-material/Gavel";
+import FactCheckIcon from "@mui/icons-material/FactCheck";
+import CoffeeIcon from "@mui/icons-material/Coffee";
+import env from "../../configs/env";
 import { translations } from "../../configs/translations";
-//import queryString from "query-string"
-//import { useSelector } from 'react-redux';
-import { usePermission } from '../../security/interceptors';
+import { usePermission } from "../../security/interceptors";
+import "./index.css";
+
+const RETURN_SECTION_KEY = "start:return-section";
 
 function HomeFeatures() {
-  //const navigate = useNavigate();
-  //const queryParams = queryString.parse(window.location)
-  const selectedLanguage = localStorage.getItem('sl')||'en' //useSelector((state) => state.selectedLanguage);
-  const [currentLanguage, setCurrentLanguage] = useState(selectedLanguage);
+    const selectedLanguage = localStorage.getItem("sl") || "en";
+    const t = translations[selectedLanguage];
 
-  useEffect(() => {
-    setCurrentLanguage(selectedLanguage)
-  }, [selectedLanguage]);
+    const cards = [
+        usePermission("ADMentry") && {
+            href: `${env.ADM_URL}?sl=${selectedLanguage}`,
+            title: t.systemAdmin,
+            description: t.systemAdminDescription,
+            icon: <AdminPanelSettingsIcon />,
+            internal: true
+        },
+        usePermission("CMNentry") && {
+            href: `${env.CMN_URL}?sl=${selectedLanguage}`,
+            title: t.commonLibrary,
+            description: t.commonLibraryDescription,
+            icon: <LibraryBooksIcon />,
+            internal: false
+        },
+        usePermission("BZRentry") && {
+            href: "http://localhost:8091/itm/?sl=sr_cyr",
+            title: t.bzrSystem,
+            description: t.bzrSystemDescription,
+            icon: <HealthAndSafetyIcon />,
+            internal: false
+        },
+        usePermission("WSTentry") && {
+            href: "http://localhost:8092/wst/?sl=sr_cyr",
+            title: t.waste,
+            description: t.wasteDescription,
+            icon: <RecyclingIcon />,
+            internal: false
+        },
+        usePermission("TMentry") && {
+            href: "http://localhost:8910/sap/?sl=sr_cyr",
+            title: t.timenagment,
+            description: t.timenagmentDescription,
+            icon: <AccessTimeFilledIcon />,
+            internal: true
+        },
+        usePermission("SPentry") && {
+            href: "http://localhost:8092/wst/?sl=sr_cyr",
+            title: t.courtProceedings,
+            description: t.courtProceedingsDescription,
+            icon: <GavelIcon />,
+            internal: true
+        },
+        usePermission("EINentry") && {
+            href: "http://localhost:8092/wst/?sl=sr_cyr",
+            title: t.inspectionOrders,
+            description: t.inspectionOrdersDescription,
+            icon: <FactCheckIcon />,
+            internal: true
+        },   
+        usePermission("COFFentry") && {
+            href: "http://localhost:8356/coff/?sl=sr_cyr",
+            title: t.coffy,
+            description: t.coffyDescription,
+            icon: <CoffeeIcon />,
+            internal: true
+        },        
+        {
+            href: "https://www.ems.rs/",
+            title: t.customerSupport,
+            description: t.customerSupportDescription,
+            icon: <HeadsetMicIcon />,
+            internal: true,
+            external: true
+        }
+    ].filter(Boolean);
 
-  const handleBoxClick = (par) => {
-
-    const moduleUrl = par;
-    //const currentUrl = window.location.href;
-
-    const xhr = new XMLHttpRequest();
-    xhr.open("GET", moduleUrl, true);
-    //xhr.setRequestHeader("Authorization", `Bearer ${localStorage.getItem("jwtToken")}`);
-    //xhr.setRequestHeader("Referer", currentUrl);
-    xhr.onreadystatechange = function () {
-      if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-        window.location.href = moduleUrl;
-      } else {
-        console.log('***************')
-      }
+    const handleCardClick = (card) => () => {
+        if (!card.external) {
+            localStorage.setItem(RETURN_SECTION_KEY, "features");
+        }
     };
-    xhr.send();
-  }
 
-  return (
-    <div id="features" className="landing-features">
-      <div className="features-topic-shadow">
-        <div className="features-topic">{translations[currentLanguage].MODULES}</div>
-      </div>
-      <div className="grid">
-        { usePermission('ADMentry') && (
-        <div className="col-12 lg:col-4" >
-          <a href={`${env.ADM_URL}?sl=${selectedLanguage}`}>
-            <div className="featurex-box">
-              <img src={`assets/layout/images/landing/icon-gorgeous@2x.png`} alt="roma" style={{ cursor: 'pointer' }} />
-              <div style={{ cursor: 'pointer' }}>
-                <h3>{translations[currentLanguage].systemAdmin}</h3>
-                <p>{translations[currentLanguage].systemAdminDescription}</p>
-              </div>
-            </div>
-          </a>
-        </div>
-        )}
-        { usePermission('CMNentry') && (
-        <div className="col-12 lg:col-4">
-          <a href={`${env.CMN_URL}?sl=${selectedLanguage}`}>
-            <div className="featurex-box">
-              <img src={`assets/layout/images/landing/icon-design@2x.png`} alt="roma" style={{ cursor: 'pointer' }} />
-              <div style={{ cursor: 'pointer' }}>
-                <h3>{translations[currentLanguage].commonLibrary}</h3>
-                <p>{translations[currentLanguage].commonLibraryDescription}</p>
-              </div>
-            </div>
-          </a>
-        </div>
-        )}
-        { usePermission('TICentry') && (
-        <div className="col-12 lg:col-4">
-          <a href={`${env.TIC_URL}?sl=${selectedLanguage}`}>
-            <div className="featurex-box">
-              <img src={`assets/layout/images/landing/icon-responsive@2x.png`} alt="roma" style={{ cursor: 'pointer' }} />
-              <div style={{ cursor: 'pointer' }}>
-                <h3>{translations[currentLanguage].ticketlineSystem}</h3>
-                <p>{translations[currentLanguage].ticketlineSystemDescription}</p>
-              </div>
-            </div>
-          </a>
-        </div>
-        )}
-        { usePermission('ADMentry') && (
-        <div className="col-12 lg:col-4">
-          <a href={`${env.ADM_URL}?sl=${selectedLanguage}`}>
-            <div className="featurex-box">
-              <img src={`assets/layout/images/landing/icon-document@2x.png`} alt="roma" style={{ cursor: 'pointer' }} />
-              <div style={{ cursor: 'pointer' }}>
-                <h3>{translations[currentLanguage].reporting}</h3>
-                <p>{translations[currentLanguage].reportingDescription}</p>
-              </div>
-            </div>
-          </a>
-        </div>
-        )}
-        {/* { usePermission('ADMentry') && (
-        <div className="col-12 lg:col-4">
-          <a href={`${env.CMN_URL}?sl=${selectedLanguage}`}>
-            <div className="featurex-box">
-              <img src={`assets/layout/images/landing/icon-responsive@2x.png`} alt="roma" style={{ cursor: 'pointer' }} />
-              <div style={{ cursor: 'pointer' }}>
-                <h3>{translations[currentLanguage].riskAssessment}</h3>
-                <p>{translations[currentLanguage].reportingDescription}</p>
-              </div>
-            </div>
-          </a>
-        </div>
-        )}   
-        { usePermission('ADMentry') && (
-        <div className="col-12 lg:col-4">
-          <a href={`${env.CMN_URL}?sl=${selectedLanguage}`}>
-            <div className="featurex-box">
-              <img src={`assets/layout/images/landing/icon-document@2x.png`} alt="roma" style={{ cursor: 'pointer' }} />
-              <div style={{ cursor: 'pointer' }}>
-                <h3>{translations[currentLanguage].safetyProtectionWork}</h3>
-                <p>{translations[currentLanguage].reportingDescription}</p>
-              </div>
-            </div>
-          </a>
-        </div>
-        )}    
-        { usePermission('ADMentry') && (
-        <div className="col-12 lg:col-4">
-          <a href={`${env.CMN_URL}?sl=${selectedLanguage}`}>
-            <div className="featurex-box">
-              <img src={`assets/layout/images/landing/icon-document@2x.png`} alt="roma" style={{ cursor: 'pointer' }} />
-              <div style={{ cursor: 'pointer' }}>
-                <h3>{translations[currentLanguage].sapLibrary}</h3>
-                <p>{translations[currentLanguage].reportingDescription}</p>
-              </div>
-            </div>
-          </a>
-        </div>
-        )}                   */}
-        <div className="col-12 lg:col-4">
-          <a href="https://www.ticketline.rs/" target="_blank">
-            <div className="featurex-box">
-              <img src={`assets/layout/images/landing/icon-you@2x.png`} alt="roma" style={{ cursor: 'pointer' }} />
-              <div style={{ cursor: 'pointer' }}>
-                <h3>{translations[currentLanguage].customerSupport}</h3>
-                <p>{translations[currentLanguage].customerSupportDescription}</p>
-              </div>
-            </div>
-          </a>
-        </div>
-      </div>
-    </div >
-  );
+    return (
+        <Box id="features" className="landing-features mui-features-section">
+            <Container maxWidth="lg">
+                <Typography variant="overline" className="mui-section-kicker">
+                    {t.NONE}
+                </Typography>
+                <Typography variant="h3" className="mui-section-title">
+                    {t.modules}
+                </Typography>
+
+                <Box
+                    className="mui-features-grid"
+                    sx={{
+                        mt: 1,
+                        display: "grid",
+                        gap: 2.5,
+                        gridTemplateColumns: {
+                            xs: "1fr",
+                            md: "repeat(2, minmax(0, 1fr))",
+                            lg: "repeat(3, minmax(0, 1fr))"
+                        }
+                    }}
+                >
+                    {cards.map((card) => (
+                        <Box className="mui-feature-grid-item" key={`${card.title}-${card.href}`}>
+                            <a
+                                href={card.href}
+                                target={card.external ? "_blank" : undefined}
+                                rel={card.external ? "noreferrer noopener" : undefined}
+                                className="mui-card-link"
+                                onClick={handleCardClick(card)}
+                            >
+                                <Card className="mui-feature-card">
+                                    <CardContent>
+                                        <Box className={`mui-feature-icon ${card.internal ? "mui-feature-icon--internal" : ""}`}>{card.icon}</Box>
+                                        <Typography variant="h6" className="mui-feature-title">
+                                            {card.title}
+                                        </Typography>
+                                        <Typography className="mui-feature-text">{card.description}</Typography>
+                                    </CardContent>
+                                </Card>
+                            </a>
+                        </Box>
+                    ))}
+                </Box>
+            </Container>
+        </Box>
+    );
 }
 
 export default HomeFeatures;

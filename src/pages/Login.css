@@ -1,0 +1,79 @@
+.login-body.mui-login-body .login-panel.mui-login-panel {
+  background-color: rgba(8, 13, 24, 0.8) !important;
+  backdrop-filter: blur(10px);
+  border-left: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: -16px 0 48px rgba(0, 0, 0, 0.35);
+}
+
+.login-body.mui-login-body .login-panel.mui-login-panel .guest-sign-in,
+.login-body.mui-login-body .login-panel.mui-login-panel label {
+  color: rgba(237, 242, 255, 0.92) !important;
+}
+
+.login-body.mui-login-body .login-panel.mui-login-panel .logo-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.login-body.mui-login-body .login-panel.mui-login-panel .auth-logo {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  object-position: left center;
+}
+
+.login-body.mui-login-body .login-panel.mui-login-panel .MuiInputBase-root,
+.login-body.mui-login-body .login-panel.mui-login-panel .MuiOutlinedInput-root {
+  background: rgba(16, 25, 45, 0.82) !important;
+  color: #f7f9ff !important;
+  border-radius: 12px;
+}
+
+.login-body.mui-login-body .login-panel.mui-login-panel .MuiOutlinedInput-root.Mui-focused {
+  background: rgba(16, 25, 45, 0.9) !important;
+}
+
+.login-body.mui-login-body .login-panel.mui-login-panel .MuiOutlinedInput-input {
+  color: #f7f9ff !important;
+  -webkit-text-fill-color: #f7f9ff !important;
+}
+
+.login-body.mui-login-body .login-panel.mui-login-panel input:-webkit-autofill,
+.login-body.mui-login-body .login-panel.mui-login-panel input:-webkit-autofill:hover,
+.login-body.mui-login-body .login-panel.mui-login-panel input:-webkit-autofill:focus,
+.login-body.mui-login-body .login-panel.mui-login-panel input:-webkit-autofill:active {
+  -webkit-text-fill-color: #f7f9ff !important;
+  box-shadow: 0 0 0 1000px rgba(16, 25, 45, 0.9) inset !important;
+  -webkit-box-shadow: 0 0 0 1000px rgba(16, 25, 45, 0.9) inset !important;
+  border-radius: 12px;
+}
+
+.login-body.mui-login-body .login-panel.mui-login-panel .MuiOutlinedInput-notchedOutline {
+  border-color: rgba(255, 255, 255, 0.26) !important;
+}
+
+.login-body.mui-login-body .login-panel.mui-login-panel .MuiInputLabel-root {
+  color: rgba(235, 242, 255, 0.86) !important;
+}
+
+.login-body.mui-login-body .login-panel.mui-login-panel .MuiSvgIcon-root {
+  color: rgba(235, 242, 255, 0.86);
+}
+
+.login-body.mui-login-body .login-panel.mui-login-panel .auth-action-btn {
+  min-width: 140px;
+  border-color: rgba(255, 255, 255, 0.35) !important;
+  color: #e7edff !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+  border-radius: 14px !important;
+  text-transform: none !important;
+  font-weight: 600 !important;
+}
+
+.login-body.mui-login-body .login-panel.mui-login-panel .auth-action-btn:hover {
+  border-color: rgba(255, 255, 255, 0.58) !important;
+  background: rgba(255, 255, 255, 0.12) !important;
+}
